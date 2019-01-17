@@ -1,3 +1,5 @@
+[![NuGet](https://img.shields.io/nuget/v/HtmlTableHelper.svg)](https://www.nuget.org/packages/HtmlTableHelper)
+<!--![](https://img.shields.io/nuget/dt/HtmlTableHelper.svg)-->
 ### Features
 - .NET Standard 2.0
 - DLL Size Only 6KB
