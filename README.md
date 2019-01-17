@@ -37,7 +37,9 @@ Result:
 
 ### TODO
 - [X] NuGet
-- [ ] Support SQL Helper
 - [X] JQuery DataTable Demo
-- [X] Tests
-      
+- [ ] Support SQL Helper
+- [ ] ASP.NET Core Demo
+- [ ] Support Annotation DisplayName
+- [ ] Support Key/Value Object
+- [ ] Support HTML Helper
