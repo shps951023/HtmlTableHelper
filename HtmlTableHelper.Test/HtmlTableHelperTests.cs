@@ -17,13 +17,13 @@ namespace HtmlTableHelper.Test
             Assert.AreEqual(array, expected);
 
             var set = sourceData.ToHashSet().ToHtmlTable();
-            Assert.AreEqual(array, expected);
+            Assert.AreEqual(set, expected);
 
             var list = sourceData.ToList().ToHtmlTable(); 
-            Assert.AreEqual(array, expected);
+            Assert.AreEqual(list, expected);
 
             var enums = sourceData.AsEnumerable().ToHtmlTable(); 
-            Assert.AreEqual(array, expected);
+            Assert.AreEqual(enums, expected);
         }
     }
 }
