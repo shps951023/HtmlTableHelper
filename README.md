@@ -1,6 +1,20 @@
-#### features
+#### Features
 - .NET Standard 2.0
-- DLL Only 6KB
+- DLL Size Only 6KB
+
+### Installation
+
+You can install the package [from NuGet](https://www.nuget.org/packages/HtmlTableHelper) using the Visual Studio Package Manager or NuGet UI:
+
+```cmd
+PM> install-package HtmlTableHelper
+```
+
+or the `dotnet` command line:
+
+```cmd
+dotnet add package HtmlTableHelper
+```
 
 #### Get Start
 
@@ -20,7 +34,7 @@ Result:
 ![2019-01-17.10.34.47-image.png](https://raw.githubusercontent.com/shps951023/ImageHosting/master/img/2019-01-17.10.34.47-image.png)
 
 #### TODO
-- [ ] NuGet
+- [X] NuGet
 - [ ] Support SQL Helper
 - [X] JQuery DataTable Demo
 - [X] Tests
