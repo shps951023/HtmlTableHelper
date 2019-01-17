@@ -1,2 +1,9 @@
-# HtmlTableHelper
-輕量 C# IEnumerable 物件轉 HTML Table 套件
+#### features
+- .NET Standard 2.0
+- DLL Only 6KB
+
+#### TODO
+- [ ] NuGet
+- [ ] Support SQL Helper
+- [X] JQuery DataTable Demo
+- [X] Tests
