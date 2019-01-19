@@ -60,14 +60,14 @@ namespace HtmlTableHelper
         private static string ToHtmlTableByKeyValue(this IEnumerable<IDictionary<string, object>> enums)
         {
             //TODO:How to Slove No Data
-            var html = GenerateTableHtml(heads: enums.First().Keys, bodys: enums);
+            var html = GenerateTableHtml(heads: enums.First().Keys, bodys: enums.Select(s => s.Values));
             return html.ToString();
         }
 
         private static string ToHtmlTableByKeyValue(this IEnumerable<IDictionary> enums)
         {
             //TODO:How to Slove No Data
-            var html = GenerateTableHtml(heads:enums.First().Keys, bodys:enums);
+            var html = GenerateTableHtml(heads:enums.First().Keys, bodys:enums.Select(s=>s.Values));
             return html.ToString();
         }
 
