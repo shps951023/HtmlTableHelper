@@ -1,6 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HtmlTableHelper;
 using System.Linq;
+using System;
+using System.Data;
 
 namespace HtmlTableHelper.Test
 {
@@ -8,22 +10,52 @@ namespace HtmlTableHelper.Test
     public class HtmlTableHelperTests
     {
         [TestMethod]
-        public void ToHtmlTableTest()
+        public void Non_Property_Test()
         {
-            var expected = @"<table><thead><tr><th>Name</th><th>Value</th></tr></thead><tbody><tr><td>Test1</td><td>Test2</td></tr></tbody></table>";
-            var sourceData = new[] { new { Name = "Test1", Value = "Test2" } };
+            var datas = new[] { new { } };
+            try
+            {
+                var html = datas.ToHtmlTable();
+            }
+            catch (Exception ex)
+            {
+                Assert.AreEqual(ex.Message, "At least one Property");
+            }
+        }
 
-            var array = sourceData.ToArray().ToHtmlTable(); 
+        [TestMethod]
+        public void IEnumerable_Test()
+        {
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+
+            var array = sourceData.ToArray().ToHtmlTable();
             Assert.AreEqual(array, expected);
 
             var set = sourceData.ToHashSet().ToHtmlTable();
             Assert.AreEqual(set, expected);
 
-            var list = sourceData.ToList().ToHtmlTable(); 
+            var list = sourceData.ToList().ToHtmlTable();
             Assert.AreEqual(list, expected);
 
-            var enums = sourceData.AsEnumerable().ToHtmlTable(); 
+            var enums = sourceData.AsEnumerable().ToHtmlTable();
             Assert.AreEqual(enums, expected);
+        }
+
+        [TestMethod]
+        public void DataTableToHtml_Test()
+        {
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+
+            var table = new DataTable();
+            table.Columns.Add("Name", typeof(string));
+            table.Columns.Add("Age", typeof(int));
+            table.Columns.Add("Country", typeof(string));
+
+            table.Rows.Add("ITWeiHan", 25, "Taiwan");
+
+            var html = table.ToHtmlTable();
+            Assert.AreEqual(html, expected);
         }
     }
 }

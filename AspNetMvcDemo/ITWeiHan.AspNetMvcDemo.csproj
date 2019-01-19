@@ -115,9 +115,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HtmlTableHelper\HtmlTableHelper.csproj">
+    <ProjectReference Include="..\HtmlTableHelper\ITWeiHan.HtmlTableHelper.Core.csproj">
       <Project>{7b52a7ca-8672-4f33-a36b-4d9896095302}</Project>
-      <Name>HtmlTableHelper</Name>
+      <Name>ITWeiHan.HtmlTableHelper.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

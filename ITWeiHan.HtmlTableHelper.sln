@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlTableHelper", "HtmlTableHelper\HtmlTableHelper.csproj", "{7B52A7CA-8672-4F33-A36B-4D9896095302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWeiHan.HtmlTableHelper.Core", "HtmlTableHelper\ITWeiHan.HtmlTableHelper.Core.csproj", "{7B52A7CA-8672-4F33-A36B-4D9896095302}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8224018-6D1A-4E9C-B59D-BCC49185ED2B}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,11 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlTableHelper.Test", "HtmlTableHelper.Test\HtmlTableHelper.Test.csproj", "{6B59FE1A-15B4-4D0E-9E50-4E8AE59BA148}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWeiHan.HtmlTableHelper.Test", "HtmlTableHelper.Test\ITWeiHan.HtmlTableHelper.Test.csproj", "{6B59FE1A-15B4-4D0E-9E50-4E8AE59BA148}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{18715FBD-FF7B-4502-A35B-82D8E16BB67A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMvcDemo", "AspNetMvcDemo\AspNetMvcDemo.csproj", "{A1E5B84C-E440-4B98-9ED7-003113B35FCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITWeiHan.AspNetMvcDemo", "AspNetMvcDemo\ITWeiHan.AspNetMvcDemo.csproj", "{A1E5B84C-E440-4B98-9ED7-003113B35FCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

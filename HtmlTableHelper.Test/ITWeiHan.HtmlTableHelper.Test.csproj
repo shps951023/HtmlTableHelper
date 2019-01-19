@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HtmlTableHelper\HtmlTableHelper.csproj" />
+    <ProjectReference Include="..\HtmlTableHelper\ITWeiHan.HtmlTableHelper.Core.csproj" />
   </ItemGroup>
 
 </Project>
