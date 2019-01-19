@@ -8,7 +8,6 @@ namespace HtmlTableHelper
 {
     public static class HTMLTableHelper
     {
-
         //TODO:指定某幾欄位,需要做假如沒有特定欄位報錯動作。
 
         public static string ToHtmlTable<T>(this IEnumerable<T> enums)
@@ -23,26 +22,20 @@ namespace HtmlTableHelper
 
         public static string ToHtmlTable(this System.Data.DataTable dt)
         {
-            var html = new StringBuilder("<table>");
-
-            //Head
-            html.Append("<thead><tr>");
+            var heads = new List<string>();
             for (int i = 0; i < dt.Columns.Count; i++)
-                html.Append("<th>" + dt.Columns[i].ColumnName + "</th>");
-            html.Append("</tr></thead>");
+                heads.Add(dt.Columns[i].ColumnName);
 
-            //Body
-            html.Append("<tbody>");
+            var bodys = new List<List<object>>();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                html.Append("<tr>");
+                var list = new List<object>();
+                bodys.Add(list);
                 for (int j = 0; j < dt.Columns.Count; j++)
-                    html.Append("<td>" + dt.Rows[i][j].ToString() + "</td>");
-                html.Append("</tr>");
+                    list.Add(dt.Rows[i][j]);
             }
 
-            html.Append("</tbody>");
-            html.Append("</table>");
+            var html = GenerateTableHtml(heads: heads, bodys: bodys);
             return html.ToString();
         }
 
@@ -54,84 +47,54 @@ namespace HtmlTableHelper
             //Check
             if (props.Count == 0) throw new Exception("At least one Property");
 
-            //Header
-            var html = new StringBuilder("<table>");
-            html.Append("<thead><tr>");
-            foreach (var p in props)
-                html.Append("<th>" + p.Name + "</th>");
-            html.Append("</tr></thead>");
+            var heads = props.Select(s => s.Name);
 
-            //Body
-            html.Append("<tbody>");
+            var bodys = new List<List<object>>();
             foreach (var e in enums)
-            {
-                html.Append("<tr>");
-                props.Select(s => s.GetValue(e)).ToList().ForEach(p =>
-                {
-                    html.Append("<td>" + p + "</td>");
-                });
-                html.Append("</tr>");
-            }
-            html.Append("</tbody>");
+                bodys.Add(props.Select(s => s.GetValue(e)).ToList());
 
-            html.Append("</table>");
+            var html = GenerateTableHtml(heads: heads, bodys: bodys);
             return html.ToString();
         }
 
         private static string ToHtmlTableByKeyValue(this IEnumerable<IDictionary<string, object>> enums)
         {
-            //Head
-            var firstEnum = enums.FirstOrDefault();
-            var html = new StringBuilder("<table>");
-            html.Append("<thead><tr>");
-            foreach (var p in firstEnum.Keys)
-                html.Append("<th>" + p + "</th>");
-            html.Append("</tr></thead>");
-
-            //Body
-            html.Append("<tbody>");
-            foreach (var e in enums)
-            {
-                html.Append("<tr>");
-                foreach (var element in e.Values)
-                {
-                    html.Append("<td>" + element.ToString() + "</td>");
-                }
-                html.Append("</tr>");
-            }
-            html.Append("</tbody>");
-
-            html.Append("</table>");
+            //TODO:How to Slove No Data
+            var html = GenerateTableHtml(heads: enums.First().Keys, bodys: enums);
             return html.ToString();
         }
 
         private static string ToHtmlTableByKeyValue(this IEnumerable<IDictionary> enums)
         {
-            //TODO:如何解決NO Data情況
+            //TODO:How to Slove No Data
+            var html = GenerateTableHtml(heads:enums.First().Keys, bodys:enums);
+            return html.ToString();
+        }
+
+        private static StringBuilder GenerateTableHtml(IEnumerable heads
+            ,IEnumerable<IEnumerable> bodys)
+        {
+            var html = new StringBuilder("<table>");
 
             //Head
-            var firstEnum = enums.FirstOrDefault();
-            var html = new StringBuilder("<table>");
             html.Append("<thead><tr>");
-            foreach (var p in firstEnum.Keys)
-                html.Append("<th>" + p + "</th>");
+            foreach (var p in heads)
+                html.Append($"<th>{p}</th>");
             html.Append("</tr></thead>");
 
             //Body
             html.Append("<tbody>");
-            foreach (var e in enums)
+            foreach (var e in bodys)
             {
                 html.Append("<tr>");
-                foreach (var element in e.Values)
-                {
-                    html.Append("<td>" + element.ToString() + "</td>");
-                }
+                foreach (var element in e)
+                    html.Append($"<td>{element.ToString()}</td>");
                 html.Append("</tr>");
             }
             html.Append("</tbody>");
 
             html.Append("</table>");
-            return html.ToString();
+            return html;
         }
     }
 }
