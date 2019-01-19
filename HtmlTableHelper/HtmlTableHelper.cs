@@ -13,14 +13,12 @@ namespace HtmlTableHelper
 
         public static string ToHtmlTable<T>(this IEnumerable<T> enums)
         {
-            if (enums is IEnumerable<IDictionary>)
-            {
-                return ToHtmlTableByKeyValue(enums as IEnumerable<IEnumerable<KeyValuePair<object, object>>>);
-            }
+            if (enums is IEnumerable<IDictionary<string, object>>)
+                return ToHtmlTableByKeyValue(enums as IEnumerable<IDictionary<string, object>>);       
+            else if (enums is IEnumerable<IDictionary>)
+                return ToHtmlTableByKeyValue(enums as IEnumerable<IDictionary>); 
             else
-            {
                 return enums.ToHtmlTableByProperties();
-            }
         }
 
         public static string ToHtmlTable(this System.Data.DataTable dt)
@@ -80,13 +78,60 @@ namespace HtmlTableHelper
             return html.ToString();
         }
 
-        private static string ToHtmlTableByKeyValue<TKey, TValue>(this IEnumerable<IEnumerable<KeyValuePair<TKey, TValue>>> enums)
+        private static string ToHtmlTableByKeyValue(this IEnumerable<IDictionary<string, object>> enums)
         {
-            throw new Exception("Not Support Now");
-            var keyType = typeof(TKey);
-            var valueType = typeof(TValue);
-           
-            return "";
+            //Head
+            var firstEnum = enums.FirstOrDefault();
+            var html = new StringBuilder("<table>");
+            html.Append("<thead><tr>");
+            foreach (var p in firstEnum.Keys)
+                html.Append("<th>" + p + "</th>");
+            html.Append("</tr></thead>");
+
+            //Body
+            html.Append("<tbody>");
+            foreach (var e in enums)
+            {
+                html.Append("<tr>");
+                foreach (var element in e.Values)
+                {
+                    html.Append("<td>" + element.ToString() + "</td>");
+                }
+                html.Append("</tr>");
+            }
+            html.Append("</tbody>");
+
+            html.Append("</table>");
+            return html.ToString();
+        }
+
+        private static string ToHtmlTableByKeyValue(this IEnumerable<IDictionary> enums)
+        {
+            //TODO:如何解決NO Data情況
+
+            //Head
+            var firstEnum = enums.FirstOrDefault();
+            var html = new StringBuilder("<table>");
+            html.Append("<thead><tr>");
+            foreach (var p in firstEnum.Keys)
+                html.Append("<th>" + p + "</th>");
+            html.Append("</tr></thead>");
+
+            //Body
+            html.Append("<tbody>");
+            foreach (var e in enums)
+            {
+                html.Append("<tr>");
+                foreach (var element in e.Values)
+                {
+                    html.Append("<td>" + element.ToString() + "</td>");
+                }
+                html.Append("</tr>");
+            }
+            html.Append("</tbody>");
+
+            html.Append("</table>");
+            return html.ToString();
         }
     }
 }

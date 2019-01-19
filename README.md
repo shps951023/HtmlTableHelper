@@ -63,6 +63,7 @@ Result:
 - [X] JQuery DataTable Demo
 - [ ] Dapper Demo
 - [ ] ASP.NET Core Demo
+- [X] Support Dapper Dynamic Query
 - [ ] Support SQL Helper
 - [ ] Support Annotation DisplayName
 - [ ] Support All Key/Value Object

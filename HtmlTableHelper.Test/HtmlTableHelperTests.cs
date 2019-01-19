@@ -1,8 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HtmlTableHelper;
-using System.Linq;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace HtmlTableHelper.Test
 {
@@ -56,6 +56,21 @@ namespace HtmlTableHelper.Test
 
             var html = table.ToHtmlTable();
             Assert.AreEqual(html, expected);
+        }
+
+        [TestMethod]
+        public void DictinaryToHtml_Test()
+        {
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var sourceData = new[] {
+               new Dictionary<string, object> (){
+                     {"Name" , "ITWeiHan" }
+                    ,{"Age",25}
+                    ,{"Country","Taiwan"}
+               }
+            };
+            var dictionary = sourceData.ToHtmlTable();
+            Assert.AreEqual(dictionary, expected);
         }
     }
 }
