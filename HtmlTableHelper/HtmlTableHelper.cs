@@ -8,7 +8,7 @@ namespace HtmlTableHelper
 {
     public static class HTMLTableHelper
     {
-        //TODO:指定某幾欄位,需要做假如沒有特定欄位報錯動作。
+        //TODO:Specify fields,And need to throw error if there is no specific column.
 
         public static string ToHtmlTable<T>(this IEnumerable<T> enums)
         {

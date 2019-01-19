@@ -69,8 +69,8 @@ namespace HtmlTableHelper.Test
                     ,{"Country","Taiwan"}
                }
             };
-            var dictionary = sourceData.ToHtmlTable();
-            Assert.AreEqual(dictionary, expected);
+            var html = sourceData.ToHtmlTable();
+            Assert.AreEqual(html, expected);
         }
     }
 }

@@ -23,7 +23,7 @@ dotnet add package HtmlTableHelper
 
 ### Get Start
 
-List/Array/Set/Enumrable Example
+List/Array/Set/Enumrable non Key/Value Type Example
 ```C#
 using HtmlTableHelper;
 ..
@@ -40,7 +40,7 @@ Dapper Example
 using (var cn = "Your Connection")
 {
 	var sourceData = cn.Query(@"select 'ITWeiHan' Name,25 Age,'Taiwan' Country");
-	var html = sourceData.ToHtmlTable();
+	var tablehtml = sourceData.ToHtmlTable();
 }
 ```
 
@@ -51,7 +51,7 @@ var sourceData = new[] {
         {"Name" , "ITWeiHan" },{"Age",25},{"Country","Taiwan"}
     }
 };
-var dictionary = sourceData.ToHtmlTable();
+var tablehtml = sourceData.ToHtmlTable();
 ```
 
 ### Demo
