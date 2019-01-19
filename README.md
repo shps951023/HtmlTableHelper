@@ -3,7 +3,7 @@
 
 ### Features
 - .NET Standard 2.0
-- DLL Size Only 6KB
+- DLL Size Only 8KB
 - Without JSON.NET
 - Support Anonymous Types
 
@@ -23,6 +23,7 @@ dotnet add package HtmlTableHelper
 
 ### Get Start
 
+List/Array/Set/Enumrable Example
 ```C#
 using HtmlTableHelper;
 ..
@@ -32,6 +33,25 @@ var tablehtml = sourceData.ToHtmlTable();
 Result:
 <table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>
 */
+```
+
+Dapper Example
+```C#
+using (var cn = "Your Connection")
+{
+	var sourceData = cn.Query(@"select 'ITWeiHan' Name,25 Age,'Taiwan' Country");
+	var html = sourceData.ToHtmlTable();
+}
+```
+
+Dictionary Example
+```C#
+var sourceData = new[] {
+    new Dictionary<string, object> (){
+        {"Name" , "ITWeiHan" },{"Age",25},{"Country","Taiwan"}
+    }
+};
+var dictionary = sourceData.ToHtmlTable();
 ```
 
 ### Demo
@@ -64,11 +84,12 @@ Result:
 - [ ] Dapper Demo
 - [ ] ASP.NET Core Demo
 - [X] Support Dapper Dynamic Query
+- [X] Support Dictionary
+- [X] Support DataTable
+
 - [ ] Support SQL Helper
 - [ ] Support Annotation DisplayName
 - [ ] Support All Key/Value Object
-- [ ] Support Dictionary
-- [X] Support DataTable
 - [ ] Support HTML Helper
 - [ ] Support i18n
 - [ ] Support filter column
