@@ -1,10 +1,6 @@
 [![NuGet](https://img.shields.io/nuget/v/HtmlTableHelper.svg)](https://www.nuget.org/packages/HtmlTableHelper)
 ![](https://img.shields.io/nuget/dt/HtmlTableHelper.svg)
 
-### Note
-This is **`alpha`** version now.  
-Do not use in production environments. 
-
 ### Features
 - .NET Standard 2.0 (Support ASP.NET MVC5 / ASP.NET Core..)
 - DLL Size Only 9KB
