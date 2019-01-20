@@ -63,6 +63,20 @@ var tablehtml = sourceData.ToHtmlTable();
 *Demo Link:*[ASP.NET MVC 5 Demo](https://htmltablehelperdemo.azurewebsites.net/)
 ![2019-01-17.10.34.47-image.png](https://raw.githubusercontent.com/shps951023/ImageHosting/master/img/2019-01-17.10.34.47-image.png)
 ```C#
+using HtmlTableHelper;
+//..
+public class HomeController : Controller
+{
+    public ActionResult Index()
+    {
+        var datas = new[] { new { Name = "ITWeiHan", Age = "25",Country = "Taiwan" } };
+        ViewBag.Table = datas.ToHtmlTable();
+        return View();
+    }
+}
+```
+
+```C#
 @{
     Layout = null;
 }
@@ -93,22 +107,22 @@ var tablehtml = sourceData.ToHtmlTable();
 
 **ASP.NET Core Demo:**
 ```C#
-    public class Startup
+public class Startup
+{
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        app.Run(async (context) =>
         {
-            app.Run(async (context) =>
-            {
-                var sourceData = new[] {
-                    new Dictionary<string, object> (){
-                        {"Name" , "ITWeiHan" },{"Age",25},{"Country","Taiwan"}
-                    }
-                };
-                var tablehtml = sourceData.ToHtmlTable();
-                await context.Response.WriteAsync(tablehtml);
-            });
-        }
+            var sourceData = new[] {
+                new Dictionary<string, object> (){
+                    {"Name" , "ITWeiHan" },{"Age",25},{"Country","Taiwan"}
+                }
+            };
+            var tablehtml = sourceData.ToHtmlTable();
+            await context.Response.WriteAsync(tablehtml);
+        });
     }
+}
 ```
 
 <!--
