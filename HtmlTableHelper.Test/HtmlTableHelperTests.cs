@@ -72,5 +72,14 @@ namespace HtmlTableHelper.Test
             var html = sourceData.ToHtmlTable();
             Assert.AreEqual(html, expected);
         }
+
+        [TestMethod]
+        public void EncodeProventXSS()
+        {
+            var expected = @"<table><thead><tr><th>Name</th></tr></thead><tbody><tr><td>&lt;script&gt;alert(&#39;XSS&#39;)&lt;/script&gt;</td></tr></tbody></table>";
+            var sourceData = new[] {new {Name = "<script>alert('XSS')</script>"  }};
+            var html = sourceData.ToHtmlTable();
+            Assert.AreEqual(expected, html);
+        }
     }
 }

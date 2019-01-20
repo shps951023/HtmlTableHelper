@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace HtmlTableHelper
 {
@@ -79,7 +80,7 @@ namespace HtmlTableHelper
             //Head
             html.Append("<thead><tr>");
             foreach (var p in heads)
-                html.Append($"<th>{p}</th>");
+                html.Append($"<th>{HttpUtility.HtmlEncode(p.ToString())}</th>");
             html.Append("</tr></thead>");
 
             //Body
@@ -88,7 +89,7 @@ namespace HtmlTableHelper
             {
                 html.Append("<tr>");
                 foreach (var element in e)
-                    html.Append($"<td>{element.ToString()}</td>");
+                    html.Append($"<td>{HttpUtility.HtmlEncode(element.ToString())}</td>");
                 html.Append("</tr>");
             }
             html.Append("</tbody>");
