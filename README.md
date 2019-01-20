@@ -7,7 +7,7 @@ Do not use in production environments.
 
 ### Features
 - .NET Standard 2.0 (Support ASP.NET MVC5 / ASP.NET Core..)
-- DLL Size Only 8KB
+- DLL Size Only 9KB
 - Without JSON.NET
 - Support Anonymous Types
 
@@ -147,7 +147,7 @@ Result:
 - [ ] Support i18n
 - [ ] Support filter column
 
-- [ ] Defalut html encode prevent xss
+- [X] Defalut html encode prevent xss
 <!--
 Read This Page
 [security - Will HTML Encoding prevent all kinds of XSS attacks? - Stack Overflow]

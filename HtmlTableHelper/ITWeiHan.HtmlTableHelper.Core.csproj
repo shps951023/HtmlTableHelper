@@ -5,16 +5,27 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Authors>ITWeiHan</Authors>
-    <Description>Mini C# IEnumerable object to HTML Table String Library</Description>
+    <Description>Github Link : [HtmlTableHelper: Mini C# IEnumerable object to HTML Table String Library](https://github.com/shps951023/HtmlTableHelper)
+</Description>
     <RepositoryUrl />
     <Copyright></Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/shps951023/HtmlTableHelper</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/shps951023/ImageHosting/master/img/2019-01-17.13.18.32-image.png</PackageIconUrl>
-    <AssemblyVersion>1.1.1.0</AssemblyVersion>
-    <FileVersion>1.1.1.0</FileVersion>
-    <Version>1.1.1</Version>
+    <AssemblyVersion>1.1.2.0</AssemblyVersion>
+    <FileVersion>1.1.2.0</FileVersion>
+    <Version>1.1.2</Version>
     <PackageId>HtmlTableHelper</PackageId>
+    <PackageReleaseNotes>### version 1.1.2
+- [X] Defalut html encode prevent xss
+
+### version 1.1.1
+
+- [X] Support Dapper Dynamic Query
+- [X] Support Dictionary
+- [X] Support DataTable
+</PackageReleaseNotes>
+    <Product>HtmlTableHelper</Product>
   </PropertyGroup>
 
 </Project>
