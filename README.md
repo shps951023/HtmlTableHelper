@@ -5,7 +5,7 @@
 - .NET Standard 2.0 (Support ASP.NET MVC5 / ASP.NET Core..)
 - DLL Size Only 9KB
 - Without JSON.NET
-- Support Anonymous Types¡BDapper Dynamic Query¡BList/Array/Set/Enumrable¡BDataTable¡BDictionary
+- Support Anonymous Types,Dapper Dynamic Query,List/Array/Set/Enumrable,DataTable,Dictionary
 
 ### Installation
 
@@ -140,7 +140,7 @@ public class Startup
 ```
 
 <!--
-«ü©wÄæ¦ì
+æŒ‡å®šæ¬„ä½
 ```C#
 using HtmlTableHelper;
 ..
