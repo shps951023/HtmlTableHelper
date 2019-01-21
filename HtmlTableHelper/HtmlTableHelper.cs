@@ -111,7 +111,7 @@ namespace HtmlTableHelper
 
         public static string ToHtmlTable<T>(this IEnumerable<T> enums, HTMLTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = InitHTMLTableGenerater(HTMLTableSetting);
+            var htmltablegenerater = CreatHTMLTableGeneraterBySetting(HTMLTableSetting);
 
             if (enums is IEnumerable<IDictionary<string, object>>)
                 return htmltablegenerater.ToHtmlTableByKeyValue(enums as IEnumerable<IDictionary<string, object>>);       
@@ -123,11 +123,11 @@ namespace HtmlTableHelper
 
         public static string ToHtmlTable(this System.Data.DataTable dt, HTMLTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = InitHTMLTableGenerater(HTMLTableSetting);
+            var htmltablegenerater = CreatHTMLTableGeneraterBySetting(HTMLTableSetting);
             return htmltablegenerater.ToHtmlTablByDataTable(dt);
         }
 
-        private static HTMLTableGenerater InitHTMLTableGenerater(HTMLTableSetting HTMLTableSetting)
+        private static HTMLTableGenerater CreatHTMLTableGeneraterBySetting(HTMLTableSetting HTMLTableSetting)
         {
             var htmltablegenerater = new HTMLTableGenerater();
             if (HTMLTableSetting != null)
