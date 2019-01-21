@@ -55,7 +55,7 @@ var tablehtml = sourceData.ToHtmlTable();
 ```
 
 **HTMLTableSetting**  
-Configurable InnerHtml Encoding
+Configurable InnerHtml Encoding (Recommended not to do so without a specific reason,because XSS Attack)
 ```C#
 var sourceData = new[] { new { Name = "<b>ITWeiHan</b>" } };
 
@@ -174,7 +174,7 @@ Result:
 - [ ] Support MVC HTML Helper
 - [ ] Support i18n
 - [ ] Support filter column
-- [ ] Support Page
+- [ ] Support Paging
 
 - [X] Defalut html encode prevent xss
 <!--

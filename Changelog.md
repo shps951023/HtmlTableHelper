@@ -1,3 +1,6 @@
+### version 1.1.3
+- [X] Configurable InnerHtml Encoding
+
 ### version 1.1.2
 - [X] Defalut html encode prevent xss
 
