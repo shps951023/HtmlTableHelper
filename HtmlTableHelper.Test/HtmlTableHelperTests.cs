@@ -81,5 +81,18 @@ namespace HtmlTableHelper.Test
             var html = sourceData.ToHtmlTable();
             Assert.AreEqual(expected, html);
         }
+
+        [TestMethod]
+        public void NonEncodeMode()
+        {
+            var expected = @"<table><thead><tr><th>Name</th></tr></thead><tbody><tr><td><b>ITWeiHan</b></td></tr></tbody></table>";
+            var htmltablesetting = new HTMLTableSetting()
+            {
+                IsHtmlEncodeMode = false
+            };
+            var sourceData = new[] { new { Name = "<b>ITWeiHan</b>" } };
+            var html = sourceData.ToHtmlTable(HTMLTableSetting: htmltablesetting);
+            Assert.AreEqual(expected, html);
+        }
     }
 }

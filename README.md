@@ -54,6 +54,18 @@ var sourceData = new[] {
 var tablehtml = sourceData.ToHtmlTable();
 ```
 
+**HTMLTableSetting**  
+Configurable InnerHtml Encoding
+```C#
+var htmltablesetting = new HTMLTableSetting()
+{
+    IsHtmlEncodeMode = false
+};
+var sourceData = new[] { new { Name = "<b>ITWeiHan</b>" } };
+var html = sourceData.ToHtmlTable(HTMLTableSetting: htmltablesetting);
+```
+
+
 ### Demo
 **ASP.NET MVC 5 JQuery DataTable Demo:**  
 *Demo Link:*[ASP.NET MVC 5 Demo](https://htmltablehelperdemo.azurewebsites.net/)
