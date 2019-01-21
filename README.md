@@ -5,7 +5,7 @@
 - .NET Standard 2.0 (Support ASP.NET MVC5 / ASP.NET Core..)
 - DLL Size Only 9KB
 - Without JSON.NET
-- Support Anonymous Types
+- Support Anonymous Types¡BDapper Dynamic Query¡BList/Array/Set/Enumrable¡BDataTable¡BDictionary
 
 ### Installation
 
