@@ -55,14 +55,20 @@ var tablehtml = sourceData.ToHtmlTable();
 ```
 
 **HTMLTableSetting**  
-Configurable InnerHtml Encoding
+Configurable InnerHtml Encoding (Recommended not to do so without a specific reason,because XSS Attack)
 ```C#
+var sourceData = new[] { new { Name = "<b>ITWeiHan</b>" } };
+
+//Default Encoding
+var encodinghtml = sourceData.ToHtmlTable();
+//Result: <table>..&lt;b&gt;ITWeiHan&lt;/b&gt;..</table>
+
 var htmltablesetting = new HTMLTableSetting()
 {
     IsHtmlEncodeMode = false
 };
-var sourceData = new[] { new { Name = "<b>ITWeiHan</b>" } };
-var html = sourceData.ToHtmlTable(HTMLTableSetting: htmltablesetting);
+var notEncodinghtml = sourceData.ToHtmlTable(HTMLTableSetting: htmltablesetting);
+//Result: <table>..<b>ITWeiHan</b>..</table>
 ```
 
 
@@ -168,6 +174,7 @@ Result:
 - [ ] Support MVC HTML Helper
 - [ ] Support i18n
 - [ ] Support filter column
+- [ ] Support Paging
 
 - [X] Defalut html encode prevent xss
 <!--
