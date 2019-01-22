@@ -5,7 +5,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace HtmlTableHelper
@@ -68,16 +67,7 @@ namespace HtmlTableHelper
                     bodys.Add(props.Select(prop =>
                     {
                         var func = GetOrAddExpressionCache<T>(prop);
-                        var value = string.Empty;
-                        if (func == null)
-                        {
-                            value = prop.GetValue(e).ToString();
-                        }
-                        else
-                        {
-                            value = func(e);
-                        }
-
+                        var value = func(e);
                         return value as object;
                     }).ToList());
                 }
@@ -132,33 +122,16 @@ namespace HtmlTableHelper
             }
 
             #region Cache
-            public static Dictionary<int, object> ExpressionCaches = new Dictionary<int, object>();      
+            public static Dictionary<int, object> ExpressionCaches = new Dictionary<int, object>();
             private Func<T, string> GetOrAddExpressionCache<T>(PropertyInfo prop)
             {
-                var key = prop.GetHashCode();
-                if (ExpressionCaches.ContainsKey(key))
-                {
-                    var func = ExpressionCaches[key] as Func<T, string>;
-                    return func;
-                }
-                else
-                {
-                    Task.Run(() => AddExpressionCacheAsync<T>(prop));
-                    return null;
-                }
-            }
-
-            /// <summary>
-            /// Asynchronous nonblocking, which does not block thread when adding a Cache
-            /// </summary>
-            private async Task AddExpressionCacheAsync<T>(PropertyInfo propertyInfo)
-            {
-                var key = propertyInfo.GetHashCode();
+                var key = prop?.GetHashCode() ?? throw new ArgumentNullException($"{nameof(prop)} is null");
                 if (!ExpressionCaches.ContainsKey(key))
                 {
-                    var func = GetValueGetter<T>(propertyInfo);
-                    ExpressionCaches.Add(key, func);
+                    ExpressionCaches[key] = GetValueGetter<T>(prop);
                 }
+
+                return ExpressionCaches[key] as Func<T, string>;
             }
 
             private static Func<T, string> GetValueGetter<T>(PropertyInfo propertyInfo)
