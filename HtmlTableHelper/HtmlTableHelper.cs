@@ -143,7 +143,7 @@ namespace HtmlTableHelper
                 }
                 else
                 {
-                    AddExpressionCacheAsync<T>(prop);
+                    Task.Run(() => AddExpressionCacheAsync<T>(prop));
                     return null;
                 }
             }
