@@ -12,13 +12,13 @@ namespace HtmlTableHelper
 
         public static string ToHtmlTable(this System.Data.DataTable dt, HTMLTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = new HTMLTableGenerater(null, null, null, HTMLTableSetting);
+            var htmltablegenerater = new HtmlTableGenerater(null, null, null, HTMLTableSetting);
             return htmltablegenerater.ToHtmlTablByDataTable(dt);
         }
 
         private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HTMLTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = new HTMLTableGenerater(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
+            var htmltablegenerater = new HtmlTableGenerater(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
 
             if (enums is IEnumerable<IDictionary<string, object>>)
             {

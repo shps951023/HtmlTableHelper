@@ -12,7 +12,7 @@ namespace HtmlTableHelper
 {
     public static partial class HTMLTableHelper
     {
-        private class HTMLTableGenerater
+        private class HtmlTableGenerater
         {
             private static readonly HTMLTableSetting _DefualtHTMLTableSetting = new HTMLTableSetting()
             {
@@ -26,7 +26,7 @@ namespace HtmlTableHelper
             private Dictionary<string, string> _tdAttributes { get; set; }
             #endregion
 
-            public HTMLTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HTMLTableSetting htmlTableSetting)
+            public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HTMLTableSetting htmlTableSetting)
             {
                 this._tableAttributes = AttributeToHtml(tableAttributes);
                 this._trAttributes = AttributeToHtml(trAttributes);
