@@ -54,12 +54,12 @@ var sourceData = new[] {
 var tablehtml = sourceData.ToHtmlTable();
 ```
 
-**Custom Table/TR/TD Attributes**
+**Custom Table/TR/TD Attributes (Dynamic Type)**
 
 ```C#
 var data = /*List/Array/Set/Enumrable..*/;
 var html = data.ToHtmlTable(
-    tableAttributes: new { @class = "SomeClass"}
+    tableAttributes: new { @class = "SomeClass"} //this is dynamic type, support all attribute 
     ,trAttributes: new { ID = "SomeID" }
     ,tdAttributes: new { width = "120 px" }
 );
