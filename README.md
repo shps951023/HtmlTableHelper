@@ -54,6 +54,33 @@ var sourceData = new[] {
 var tablehtml = sourceData.ToHtmlTable();
 ```
 
+**Custom Table/TR/TD Attributes**
+
+```C#
+var data = /*List/Array/Set/Enumrable..*/;
+var html = data.ToHtmlTable(
+    tableAttributes: new { @class = "SomeClass"}
+    ,trAttributes: new { ID = "SomeID" }
+    ,tdAttributes: new { width = "120 px" }
+);
+/*
+Result:
+<table class="SomeClass">
+	<thead>
+		<tr ID="SomeID">
+			<th>..</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ID="SomeID">
+			<td width="120 px">..</td>
+		</tr>
+	</tbody>
+</table>
+*/
+```
+  
+
 **HTMLTableSetting**  
 Configurable InnerHtml Encoding (Recommended not to do so without a specific reason,because XSS Attack)
 ```C#
