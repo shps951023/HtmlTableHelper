@@ -83,7 +83,7 @@ namespace HtmlTableHelper.Test
         }
 
         [TestMethod]
-        public void NonEncodeMode()
+        public void NonEncodeModeTest()
         {
             var expected = @"<table><thead><tr><th>Name</th></tr></thead><tbody><tr><td><b>ITWeiHan</b></td></tr></tbody></table>";
             var htmltablesetting = new HTMLTableSetting()
@@ -93,6 +93,36 @@ namespace HtmlTableHelper.Test
             var sourceData = new[] { new { Name = "<b>ITWeiHan</b>" } };
             var html = sourceData.ToHtmlTable(HTMLTableSetting: htmltablesetting);
             Assert.AreEqual(expected, html);
+        }
+
+        [TestMethod]
+        public void AttributeTableTest()
+        {
+            var expected = @"<table class=""SomeClass"" ><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+
+            var array = sourceData.ToArray().ToHtmlTable(tableAttributes:new {@class="SomeClass"});
+            Assert.AreEqual(array, expected);
+        }
+
+        [TestMethod]
+        public void AttributeTrTest()
+        {
+            var expected = @"<table><thead><tr class=""SomeClass"" ><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr class=""SomeClass"" ><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+
+            var array = sourceData.ToArray().ToHtmlTable(trAttributes: new { @class = "SomeClass" });
+            Assert.AreEqual(array, expected);
+        }
+
+        [TestMethod]
+        public void AttributeTdTest()
+        {
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td class=""SomeClass"" >ITWeiHan</td><td class=""SomeClass"" >25</td><td class=""SomeClass"" >Taiwan</td></tr></tbody></table>";
+            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+
+            var array = sourceData.ToArray().ToHtmlTable(tdAttributes: new { @class = "SomeClass" });
+            Assert.AreEqual(array, expected);
         }
     }
 }

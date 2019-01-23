@@ -167,6 +167,8 @@ Result:
 - [X] Support Dapper Dynamic Query
 - [X] Support Dictionary
 - [X] Support DataTable
+- [X] Support Cunstom Table/TR/TD Attributes.
+- [X] Defalut html encode prevent xss
 
 - [ ] Support SQL Helper
 - [ ] Support Annotation DisplayName
@@ -176,7 +178,7 @@ Result:
 - [ ] Support filter column
 - [ ] Support Paging
 
-- [X] Defalut html encode prevent xss
+
 <!--
 Read This Page
 [security - Will HTML Encoding prevent all kinds of XSS attacks? - Stack Overflow]
