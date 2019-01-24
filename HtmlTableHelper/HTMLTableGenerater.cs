@@ -111,13 +111,13 @@ namespace HtmlTableHelper
             {
                 #region attrs
                 var tableAttHtml = _TableAttributes != null
-                    ? string.Join("", _TableAttributes.Select(s => $" {s.Key}=\"{HttpUtility.HtmlEncode(s.Value)}\" "))
+                    ? string.Join("", _TableAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
                 var trAttHtml = _TrAttributes != null
-                    ? string.Join("", _TrAttributes.Select(s => $" {s.Key}=\"{HttpUtility.HtmlEncode(s.Value)}\" "))
+                    ? string.Join("", _TrAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
                 var tdAttHtml = _TdAttributes != null
-                    ? string.Join("", _TdAttributes.Select(s => $" {s.Key}=\"{HttpUtility.HtmlEncode(s.Value)}\" "))
+                    ? string.Join("", _TdAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
                 #endregion
 
@@ -127,7 +127,7 @@ namespace HtmlTableHelper
                 html.Append($"<thead><tr{trAttHtml}>");
                 foreach (var p in heads)
                 {
-                    var thInnerHTML = _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(p.ToString()) : p.ToString();
+                    string thInnerHTML = Encode(p);
                     html.Append($"<th>{thInnerHTML}</th>");
                 }
                 html.Append("</tr></thead>");
@@ -139,9 +139,7 @@ namespace HtmlTableHelper
                     html.Append($"<tr{trAttHtml}>");
                     foreach (var v in values)
                     {
-                        var tdInnerHTML = _HtmlTableSetting.IsHtmlEncodeMode
-                            ? HttpUtility.HtmlEncode(v.ToString())
-                            : v.ToString();
+                        string tdInnerHTML = Encode(v);
                         html.Append($"<td{tdAttHtml}>{tdInnerHTML}</td>");
                     }
                     html.Append("</tr>");
@@ -150,6 +148,11 @@ namespace HtmlTableHelper
 
                 html.Append("</table>");
                 return html;
+            }
+
+            private string Encode(object obj)
+            {
+                return _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(obj.ToString()) : obj.ToString();
             }
 
             //TODO: separate into new class
