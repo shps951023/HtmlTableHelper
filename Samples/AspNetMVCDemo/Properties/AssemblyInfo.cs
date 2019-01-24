@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 組件的一般資訊是由下列的屬性集 
 // 控制。變更這些屬性值可修改與組件關聯的
 // 資訊。
-[assembly: AssemblyTitle("AspNetMvcDemo")]
+[assembly: AssemblyTitle("AspNetMVCDemo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AspNetMvcDemo")]
+[assembly: AssemblyProduct("AspNetMVCDemo")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 下列 GUID 為專案公開 (Expose) 至 COM 時所要使用的 typelib ID
-[assembly: Guid("a1e5b84c-e440-4b98-9ed7-003113b35fcc")]
+[assembly: Guid("d35c36c5-10d0-40b0-80a1-465a76ea4709")]
 
 // 組件的版本資訊是由下列四項值構成:
 //

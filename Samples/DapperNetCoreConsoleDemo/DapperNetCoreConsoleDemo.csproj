@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HtmlTableHelper\ITWeiHan.HtmlTableHelper.Core.csproj" />
+    <ProjectReference Include="..\..\Src\ITWeiHan.HtmlTableHelper\ITWeiHan.HtmlTableHelper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using HtmlTableHelper;
 
-namespace ITWeiHan.AspNetCoreDemo
+namespace AspNetCoreDemo
 {
     public class Startup
     {

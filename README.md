@@ -134,7 +134,7 @@ public class HomeController : Controller
     <div>
         @Html.Raw(ViewBag.Table)
     </div>
-    <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
