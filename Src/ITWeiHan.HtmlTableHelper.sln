@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8224018-6D1A-4E9C-B59D-BCC49185ED2B}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Changelog.md = Changelog.md
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{18715FBD-FF7B-4502-A35B-82D8E16BB67A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWeiHan.HtmlTableHelper", "ITWeiHan.HtmlTableHelper\ITWeiHan.HtmlTableHelper.csproj", "{E38F1CEC-A9D0-426F-9710-432DBF21BA60}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWeiHan.HtmlTableHelper.Test", "ITWeiHan.HtmlTableHelper.Test\ITWeiHan.HtmlTableHelper.Test.csproj", "{ABCBFDD8-F80A-4BBA-9D00-FCD8E3743B2D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreDemo", "..\Samples\AspNetCoreDemo\AspNetCoreDemo.csproj", "{0FF12BBD-C677-477B-97DD-5F84DE8E45BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperNetCoreConsoleDemo", "..\Samples\DapperNetCoreConsoleDemo\DapperNetCoreConsoleDemo.csproj", "{0CE2529B-5A21-48E6-9212-2A40D59B4E5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetMVCDemo", "..\Samples\AspNetMVCDemo\AspNetMVCDemo.csproj", "{D35C36C5-10D0-40B0-80A1-465A76EA4709}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E38F1CEC-A9D0-426F-9710-432DBF21BA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E38F1CEC-A9D0-426F-9710-432DBF21BA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E38F1CEC-A9D0-426F-9710-432DBF21BA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E38F1CEC-A9D0-426F-9710-432DBF21BA60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABCBFDD8-F80A-4BBA-9D00-FCD8E3743B2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABCBFDD8-F80A-4BBA-9D00-FCD8E3743B2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABCBFDD8-F80A-4BBA-9D00-FCD8E3743B2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABCBFDD8-F80A-4BBA-9D00-FCD8E3743B2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FF12BBD-C677-477B-97DD-5F84DE8E45BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FF12BBD-C677-477B-97DD-5F84DE8E45BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FF12BBD-C677-477B-97DD-5F84DE8E45BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FF12BBD-C677-477B-97DD-5F84DE8E45BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CE2529B-5A21-48E6-9212-2A40D59B4E5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CE2529B-5A21-48E6-9212-2A40D59B4E5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CE2529B-5A21-48E6-9212-2A40D59B4E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CE2529B-5A21-48E6-9212-2A40D59B4E5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D35C36C5-10D0-40B0-80A1-465A76EA4709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D35C36C5-10D0-40B0-80A1-465A76EA4709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D35C36C5-10D0-40B0-80A1-465A76EA4709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D35C36C5-10D0-40B0-80A1-465A76EA4709}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0FF12BBD-C677-477B-97DD-5F84DE8E45BA} = {18715FBD-FF7B-4502-A35B-82D8E16BB67A}
+		{0CE2529B-5A21-48E6-9212-2A40D59B4E5C} = {18715FBD-FF7B-4502-A35B-82D8E16BB67A}
+		{D35C36C5-10D0-40B0-80A1-465A76EA4709} = {18715FBD-FF7B-4502-A35B-82D8E16BB67A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67784E2B-A03D-4CF0-81EA-4D8B56A572F3}
+	EndGlobalSection
+EndGlobal

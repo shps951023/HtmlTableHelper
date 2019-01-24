@@ -134,7 +134,7 @@ public class HomeController : Controller
     <div>
         @Html.Raw(ViewBag.Table)
     </div>
-    <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -197,12 +197,8 @@ Result:
 - [X] Support Cunstom Table/TR/TD Attributes.
 - [X] Defalut html encode prevent xss
 
-- [ ] Support SQL Helper
-- [ ] Support Annotation DisplayName
-- [ ] Support All Key/Value Object
-- [ ] Support MVC HTML Helper
-- [ ] Support i18n
-- [ ] Support filter column
+- [ ] Support Annotation DisplayName/Filiter/i18n column..
+- [ ] Support All Key/Value Type
 - [ ] Support Paging
 
 

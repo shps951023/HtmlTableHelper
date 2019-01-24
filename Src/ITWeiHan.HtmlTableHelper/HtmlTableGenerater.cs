@@ -20,18 +20,18 @@ namespace HtmlTableHelper
             };
 
             #region Prop
-            private HTMLTableSetting _htmlTableSetting { get; set; }
-            private Dictionary<string,string> _tableAttributes { get; set; }
-            private Dictionary<string, string> _trAttributes { get; set; }
-            private Dictionary<string, string> _tdAttributes { get; set; }
+            private HTMLTableSetting _HtmlTableSetting { get; set; }
+            private Dictionary<string,string> _TableAttributes { get; set; }
+            private Dictionary<string, string> _TrAttributes { get; set; }
+            private Dictionary<string, string> _TdAttributes { get; set; }
             #endregion
 
             public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HTMLTableSetting htmlTableSetting)
             {
-                this._tableAttributes = AttributeToHtml(tableAttributes);
-                this._trAttributes = AttributeToHtml(trAttributes);
-                this._tdAttributes = AttributeToHtml(tdAttributes);
-                this._htmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting;
+                this._TableAttributes = AttributeToHtml(tableAttributes);
+                this._TrAttributes = AttributeToHtml(trAttributes);
+                this._TdAttributes = AttributeToHtml(tdAttributes);
+                this._HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting;
             }
 
             private Dictionary<string, string> AttributeToHtml(object tableAttributes)
@@ -80,14 +80,14 @@ namespace HtmlTableHelper
 
                 var heads = props.Select(s => s.Name);
 
-                var bodys = new List<List<object>>();
+                var bodys = new List<List<string>>(); //TODO:'new List' this looks like it can be replaced
                 foreach (var e in enums)
                 {
                     bodys.Add(props.Select(prop =>
                     {
-                        var func = GetOrAddExpressionCache<T>(prop);
-                        var value = func(e);
-                        return value as object;
+                        var compiledExpression = GetOrAddExpressionCache<T>(prop);
+                        var value = compiledExpression(e);
+                        return value;
                     }).ToList());
                 }
                 var html = GenerateTableHtml(heads: heads, bodys: bodys);
@@ -110,14 +110,14 @@ namespace HtmlTableHelper
                 , IEnumerable<IEnumerable> bodys)
             {
                 #region attrs
-                var tableAttHtml = _tableAttributes != null
-                    ? string.Join("", _tableAttributes.Select(s => $" {s.Key}=\"{HttpUtility.HtmlEncode(s.Value)}\" "))
+                var tableAttHtml = _TableAttributes != null
+                    ? string.Join("", _TableAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
-                var trAttHtml = _trAttributes != null
-                    ? string.Join("", _trAttributes.Select(s => $" {s.Key}=\"{HttpUtility.HtmlEncode(s.Value)}\" "))
+                var trAttHtml = _TrAttributes != null
+                    ? string.Join("", _TrAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
-                var tdAttHtml = _tdAttributes != null
-                    ? string.Join("", _tdAttributes.Select(s => $" {s.Key}=\"{HttpUtility.HtmlEncode(s.Value)}\" "))
+                var tdAttHtml = _TdAttributes != null
+                    ? string.Join("", _TdAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
                 #endregion
 
@@ -127,7 +127,7 @@ namespace HtmlTableHelper
                 html.Append($"<thead><tr{trAttHtml}>");
                 foreach (var p in heads)
                 {
-                    var thInnerHTML = _htmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(p.ToString()) : p.ToString();
+                    string thInnerHTML = Encode(p);
                     html.Append($"<th>{thInnerHTML}</th>");
                 }
                 html.Append("</tr></thead>");
@@ -139,9 +139,7 @@ namespace HtmlTableHelper
                     html.Append($"<tr{trAttHtml}>");
                     foreach (var v in values)
                     {
-                        var tdInnerHTML = _htmlTableSetting.IsHtmlEncodeMode
-                            ? HttpUtility.HtmlEncode(v.ToString())
-                            : v.ToString();
+                        string tdInnerHTML = Encode(v);
                         html.Append($"<td{tdAttHtml}>{tdInnerHTML}</td>");
                     }
                     html.Append("</tr>");
@@ -152,10 +150,18 @@ namespace HtmlTableHelper
                 return html;
             }
 
-            #region Cache
+            private string Encode(object obj)
+            {
+                return _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(obj.ToString()) : obj.ToString();
+            }
+
+            //TODO: separate into new class
+            #region Cache 
             public static Dictionary<int, object> ExpressionCaches = new Dictionary<int, object>();
             private Func<T, string> GetOrAddExpressionCache<T>(PropertyInfo prop)
             {
+                //TODO: GetHashCode should be replaced by prop.MetadataToken + prop.Module.ModuleVersionId
+                //https://codereview.stackexchange.com/questions/211976/propertyinfo-getvalue-and-expression-cache-getvalue/212056#212056
                 var key = prop?.GetHashCode() ?? throw new ArgumentNullException($"{nameof(prop)} is null");
                 if (!ExpressionCaches.ContainsKey(key))
                 {
