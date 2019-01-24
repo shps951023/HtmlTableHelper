@@ -86,7 +86,7 @@ namespace HtmlTableHelper.Test
         public void NonEncodeModeTest()
         {
             var expected = @"<table><thead><tr><th>Name</th></tr></thead><tbody><tr><td><b>ITWeiHan</b></td></tr></tbody></table>";
-            var htmltablesetting = new HTMLTableSetting()
+            var htmltablesetting = new HtmlTableSetting()
             {
                 IsHtmlEncodeMode = false
             };

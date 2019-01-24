@@ -112,6 +112,12 @@
   <ItemGroup>
     <Folder Include="Views\Home\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\ITWeiHan.HtmlTableHelper\ITWeiHan.HtmlTableHelper.csproj">
+      <Project>{E38F1CEC-A9D0-426F-9710-432DBF21BA60}</Project>
+      <Name>ITWeiHan.HtmlTableHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

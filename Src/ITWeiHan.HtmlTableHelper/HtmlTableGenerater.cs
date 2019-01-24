@@ -10,23 +10,23 @@ using System.Web;
 
 namespace HtmlTableHelper
 {
-    public static partial class HTMLTableHelper
+    public static partial class HtmlTableHelper
     {
         private class HtmlTableGenerater
         {
-            private static readonly HTMLTableSetting _DefualtHTMLTableSetting = new HTMLTableSetting()
+            private static readonly HtmlTableSetting _DefualtHTMLTableSetting = new HtmlTableSetting()
             {
                 IsHtmlEncodeMode = true
             };
 
             #region Prop
-            private HTMLTableSetting _HtmlTableSetting { get; set; }
+            private HtmlTableSetting _HtmlTableSetting { get; set; }
             private Dictionary<string,string> _TableAttributes { get; set; }
             private Dictionary<string, string> _TrAttributes { get; set; }
             private Dictionary<string, string> _TdAttributes { get; set; }
             #endregion
 
-            public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HTMLTableSetting htmlTableSetting)
+            public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HtmlTableSetting htmlTableSetting)
             {
                 this._TableAttributes = AttributeToHtml(tableAttributes);
                 this._TrAttributes = AttributeToHtml(trAttributes);
@@ -155,7 +155,7 @@ namespace HtmlTableHelper
                 return _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(obj.ToString()) : obj.ToString();
             }
 
-            //TODO: separate into new class
+            //TODO: move to new class
             #region Cache 
             public static Dictionary<int, object> ExpressionCaches = new Dictionary<int, object>();
             private Func<T, string> GetOrAddExpressionCache<T>(PropertyInfo prop)
