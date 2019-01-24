@@ -197,12 +197,8 @@ Result:
 - [X] Support Cunstom Table/TR/TD Attributes.
 - [X] Defalut html encode prevent xss
 
-- [ ] Support SQL Helper
-- [ ] Support Annotation DisplayName
-- [ ] Support All Key/Value Object
-- [ ] Support MVC HTML Helper
-- [ ] Support i18n
-- [ ] Support filter column
+- [ ] Support Annotation DisplayName/Filiter/i18n column..
+- [ ] Support All Key/Value Type
 - [ ] Support Paging
 
 

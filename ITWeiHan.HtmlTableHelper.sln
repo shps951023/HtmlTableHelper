@@ -16,11 +16,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWeiHan.HtmlTableHelper.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{18715FBD-FF7B-4502-A35B-82D8E16BB67A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITWeiHan.AspNetMvcDemo", "AspNetMvcDemo\ITWeiHan.AspNetMvcDemo.csproj", "{A1E5B84C-E440-4B98-9ED7-003113B35FCC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWeiHan.AspNetCoreDemo", "ITWeiHan.AspNetCoreDemo\ITWeiHan.AspNetCoreDemo.csproj", "{F474D0DC-8F11-4F68-AAC6-5927475A83DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITWeiHan.DapperNetCoreConsoleDemo", "ITWeiHan.DapperNetCoreConsoleDemo\ITWeiHan.DapperNetCoreConsoleDemo.csproj", "{345B0478-3E00-470C-929D-2AD28E41FEF5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITWeiHan.DapperNetCoreConsoleDemo", "ITWeiHan.DapperNetCoreConsoleDemo\ITWeiHan.DapperNetCoreConsoleDemo.csproj", "{345B0478-3E00-470C-929D-2AD28E41FEF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITWeiHan.AspNetMvcDemo", "ITWeiHan.AspNetMvcDemo\ITWeiHan.AspNetMvcDemo.csproj", "{A1E5B84C-E440-4B98-9ED7-003113B35FCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,6 @@ Global
 		{6B59FE1A-15B4-4D0E-9E50-4E8AE59BA148}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B59FE1A-15B4-4D0E-9E50-4E8AE59BA148}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B59FE1A-15B4-4D0E-9E50-4E8AE59BA148}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F474D0DC-8F11-4F68-AAC6-5927475A83DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F474D0DC-8F11-4F68-AAC6-5927475A83DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F474D0DC-8F11-4F68-AAC6-5927475A83DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,14 +44,18 @@ Global
 		{345B0478-3E00-470C-929D-2AD28E41FEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{345B0478-3E00-470C-929D-2AD28E41FEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{345B0478-3E00-470C-929D-2AD28E41FEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E5B84C-E440-4B98-9ED7-003113B35FCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A1E5B84C-E440-4B98-9ED7-003113B35FCC} = {18715FBD-FF7B-4502-A35B-82D8E16BB67A}
 		{F474D0DC-8F11-4F68-AAC6-5927475A83DB} = {18715FBD-FF7B-4502-A35B-82D8E16BB67A}
 		{345B0478-3E00-470C-929D-2AD28E41FEF5} = {18715FBD-FF7B-4502-A35B-82D8E16BB67A}
+		{A1E5B84C-E440-4B98-9ED7-003113B35FCC} = {18715FBD-FF7B-4502-A35B-82D8E16BB67A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {67784E2B-A03D-4CF0-81EA-4D8B56A572F3}
