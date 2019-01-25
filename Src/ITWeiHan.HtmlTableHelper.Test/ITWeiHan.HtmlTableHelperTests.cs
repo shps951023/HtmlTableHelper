@@ -1,7 +1,9 @@
+using Dapper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 
 namespace HtmlTableHelper.Test
@@ -40,6 +42,20 @@ namespace HtmlTableHelper.Test
 
             var enums = sourceData.AsEnumerable().ToHtmlTable();
             Assert.AreEqual(enums, expected);
+        }
+
+        [TestMethod]
+        public void DapperDynamicQuery_Test()
+        {
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            const string _path = "Test.sqlite";
+            SQLiteConnection.CreateFile(_path);
+            using (var cn = new SQLiteConnection($"Data Source={_path};Version=3;"))
+            {
+                var sourceData = cn.Query(@"select 'ITWeiHan' Name,25 Age,'Taiwan' Country");
+                var html = sourceData.ToHtmlTable();
+                Assert.AreEqual(html, expected);
+            }
         }
 
         [TestMethod]
