@@ -85,7 +85,7 @@ namespace HtmlTableHelper
                 {
                     bodys.Add(props.Select(prop =>
                     {
-                        var compiledExpression = GetOrAddExpressionCache<T>(prop);
+                        var compiledExpression = ExpressionCache.GetOrAddExpressionCache<T>(prop);
                         var value = compiledExpression(e);
                         return value;
                     }).ToList());
@@ -154,31 +154,6 @@ namespace HtmlTableHelper
             {
                 return _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(obj.ToString()) : obj.ToString();
             }
-
-            //TODO: move to new class
-            #region Cache 
-            public static Dictionary<int, object> ExpressionCaches = new Dictionary<int, object>();
-            private Func<T, string> GetOrAddExpressionCache<T>(PropertyInfo prop)
-            {
-                //TODO: GetHashCode should be replaced by prop.MetadataToken + prop.Module.ModuleVersionId
-                //https://codereview.stackexchange.com/questions/211976/propertyinfo-getvalue-and-expression-cache-getvalue/212056#212056
-                var key = prop?.GetHashCode() ?? throw new ArgumentNullException($"{nameof(prop)} is null");
-                if (!ExpressionCaches.ContainsKey(key))
-                {
-                    ExpressionCaches[key] = GetValueGetter<T>(prop);
-                }
-
-                return ExpressionCaches[key] as Func<T, string>;
-            }
-
-            private static Func<T, string> GetValueGetter<T>(PropertyInfo propertyInfo)
-            {
-                var instance = Expression.Parameter(propertyInfo.DeclaringType);
-                var property = Expression.Property(instance, propertyInfo);
-                var toString = Expression.Call(property, "ToString", Type.EmptyTypes);
-                return Expression.Lambda<Func<T, string>>(toString, instance).Compile();
-            }
-            #endregion
         }
     }
 }
