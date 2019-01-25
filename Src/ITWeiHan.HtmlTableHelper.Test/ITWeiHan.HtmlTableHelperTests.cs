@@ -45,6 +45,15 @@ namespace HtmlTableHelper.Test
         }
 
         [TestMethod]
+        public void Cache_Test()
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                IEnumerable_Test();
+            }
+        }
+
+        [TestMethod]
         public void DapperDynamicQuery_Test()
         {
             var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";

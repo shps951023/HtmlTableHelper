@@ -39,6 +39,7 @@ namespace HtmlTableHelper
                 if (tableAttributes == null) return null;
                 var type = tableAttributes.GetType();
                 var dic = type.GetProperties()
+                    //TODO:Convert to Cache
                     .Select(prop=>new { Key= prop.Name,Value=prop.GetValue(tableAttributes).ToString() })
                     .ToDictionary(key=>key.Key,value=>value.Value);
                 return dic;

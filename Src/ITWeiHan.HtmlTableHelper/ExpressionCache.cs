@@ -17,12 +17,14 @@ namespace HtmlTableHelper
                 //Done: GetHashCode should be replaced by prop.MetadataToken + prop.Module.ModuleVersionId
                 //https://codereview.stackexchange.com/questions/211976/propertyinfo-getvalue-and-expression-cache-getvalue/212056#212056
                 //var key = prop?.GetHashCode() ?? throw new ArgumentNullException($"{nameof(prop)} is null");
-                var key = prop != null ? $"{prop.MetadataToken}-{prop.Module.ModuleVersionId}" : throw new ArgumentNullException($"{nameof(prop)} is null");
+                var type = typeof(T);
+                var key = prop != null ? $"{type.MetadataToken}-{type.Module.ModuleVersionId}-{prop.MetadataToken}-{prop.Module.ModuleVersionId}" : throw new ArgumentNullException($"{nameof(prop)} is null");
                 if (!ExpressionCaches.ContainsKey(key))
                 {
                     lock (_Lock)
                     {
-                        ExpressionCaches[key] = CompileGetValueExpression<T>(prop);
+                        if (!ExpressionCaches.ContainsKey(key))
+                            ExpressionCaches[key] = CompileGetValueExpression<T>(prop);
                     }
                 }
                 return ExpressionCaches[key] as Func<T, string>;
@@ -30,6 +32,10 @@ namespace HtmlTableHelper
 
             private static Func<T, string> CompileGetValueExpression<T>(PropertyInfo propertyInfo)
             {
+                if (typeof(T) != propertyInfo.DeclaringType)
+                {
+                    throw new Exception("Parameter T Type should be equals propertyInfo.DeclaringType");
+                }
                 var instance = Expression.Parameter(propertyInfo.DeclaringType);
                 var property = Expression.Property(instance, propertyInfo);
                 var toString = Expression.Call(property, "ToString", Type.EmptyTypes);
