@@ -3,20 +3,28 @@ using System.Collections.Generic;
 
 namespace HtmlTableHelper
 {
-    public static partial class HTMLTableHelper
+    public static partial class HtmlTableHelper
     {
-        public static string ToHtmlTable<T>(this IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HTMLTableSetting HTMLTableSetting = null)
+        /// <summary>
+        /// The Custom Table/TR/TD Attributes Way:
+        /// var html = data.ToHtmlTable(tableAttributes: new { @class = "SomeClass"}  ,trAttributes: new { ID = "SomeID" },tdAttributes: new { width = "120 px" });
+        /// </summary>
+        public static string ToHtmlTable<T>(this IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
             return ToHtmlTableByIEnumrable(enums, tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
         }
 
-        public static string ToHtmlTable(this System.Data.DataTable dt, HTMLTableSetting HTMLTableSetting = null)
+        /// <summary>
+        /// The Custom Table/TR/TD Attributes Way:
+        /// var html = data.ToHtmlTable(tableAttributes: new { @class = "SomeClass"}  ,trAttributes: new { ID = "SomeID" },tdAttributes: new { width = "120 px" });
+        /// </summary>
+        public static string ToHtmlTable(this System.Data.DataTable datatable, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = new HtmlTableGenerater(null, null, null, HTMLTableSetting);
-            return htmltablegenerater.ToHtmlTablByDataTable(dt);
+            var htmltablegenerater = new HtmlTableGenerater(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
+            return htmltablegenerater.ToHtmlTablByDataTable(datatable);
         }
 
-        private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HTMLTableSetting HTMLTableSetting = null)
+        private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
             var htmltablegenerater = new HtmlTableGenerater(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
 
@@ -33,7 +41,5 @@ namespace HtmlTableHelper
                 return htmltablegenerater.ToHtmlTableByProperties(enums);
             }
         }
-
-
     }
 }

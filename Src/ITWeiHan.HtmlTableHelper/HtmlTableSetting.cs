@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HtmlTableHelper
 {
-    public class HTMLTableSetting
+    public class HtmlTableSetting
     {
         public bool IsHtmlEncodeMode { get; set; }
     }

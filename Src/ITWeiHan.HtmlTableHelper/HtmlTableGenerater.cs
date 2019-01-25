@@ -10,23 +10,23 @@ using System.Web;
 
 namespace HtmlTableHelper
 {
-    public static partial class HTMLTableHelper
+    public static partial class HtmlTableHelper
     {
         private class HtmlTableGenerater
         {
-            private static readonly HTMLTableSetting _DefualtHTMLTableSetting = new HTMLTableSetting()
+            private static readonly HtmlTableSetting _DefualtHTMLTableSetting = new HtmlTableSetting()
             {
                 IsHtmlEncodeMode = true
             };
 
             #region Prop
-            private HTMLTableSetting _HtmlTableSetting { get; set; }
+            private HtmlTableSetting _HtmlTableSetting { get; set; }
             private Dictionary<string,string> _TableAttributes { get; set; }
             private Dictionary<string, string> _TrAttributes { get; set; }
             private Dictionary<string, string> _TdAttributes { get; set; }
             #endregion
 
-            public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HTMLTableSetting htmlTableSetting)
+            public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HtmlTableSetting htmlTableSetting)
             {
                 this._TableAttributes = AttributeToHtml(tableAttributes);
                 this._TrAttributes = AttributeToHtml(trAttributes);
@@ -39,6 +39,7 @@ namespace HtmlTableHelper
                 if (tableAttributes == null) return null;
                 var type = tableAttributes.GetType();
                 var dic = type.GetProperties()
+                    //TODO:Convert to Cache
                     .Select(prop=>new { Key= prop.Name,Value=prop.GetValue(tableAttributes).ToString() })
                     .ToDictionary(key=>key.Key,value=>value.Value);
                 return dic;
@@ -85,7 +86,7 @@ namespace HtmlTableHelper
                 {
                     bodys.Add(props.Select(prop =>
                     {
-                        var compiledExpression = GetOrAddExpressionCache<T>(prop);
+                        var compiledExpression = ExpressionCache.GetOrAddExpressionCache<T>(prop);
                         var value = compiledExpression(e);
                         return value;
                     }).ToList());
@@ -154,31 +155,6 @@ namespace HtmlTableHelper
             {
                 return _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(obj.ToString()) : obj.ToString();
             }
-
-            //TODO: separate into new class
-            #region Cache 
-            public static Dictionary<int, object> ExpressionCaches = new Dictionary<int, object>();
-            private Func<T, string> GetOrAddExpressionCache<T>(PropertyInfo prop)
-            {
-                //TODO: GetHashCode should be replaced by prop.MetadataToken + prop.Module.ModuleVersionId
-                //https://codereview.stackexchange.com/questions/211976/propertyinfo-getvalue-and-expression-cache-getvalue/212056#212056
-                var key = prop?.GetHashCode() ?? throw new ArgumentNullException($"{nameof(prop)} is null");
-                if (!ExpressionCaches.ContainsKey(key))
-                {
-                    ExpressionCaches[key] = GetValueGetter<T>(prop);
-                }
-
-                return ExpressionCaches[key] as Func<T, string>;
-            }
-
-            private static Func<T, string> GetValueGetter<T>(PropertyInfo propertyInfo)
-            {
-                var instance = Expression.Parameter(propertyInfo.DeclaringType);
-                var property = Expression.Property(instance, propertyInfo);
-                var toString = Expression.Call(property, "ToString", Type.EmptyTypes);
-                return Expression.Lambda<Func<T, string>>(toString, instance).Compile();
-            }
-            #endregion
         }
     }
 }
