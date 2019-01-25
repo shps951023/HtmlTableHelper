@@ -47,15 +47,21 @@ namespace HtmlTableHelper.Test
         {
             var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
 
+            DataTable table = GetTestDataTable();
+
+            var html = table.ToHtmlTable();
+            Assert.AreEqual(html, expected);
+        }
+
+        private static DataTable GetTestDataTable()
+        {
             var table = new DataTable();
             table.Columns.Add("Name", typeof(string));
             table.Columns.Add("Age", typeof(int));
             table.Columns.Add("Country", typeof(string));
 
             table.Rows.Add("ITWeiHan", 25, "Taiwan");
-
-            var html = table.ToHtmlTable();
-            Assert.AreEqual(html, expected);
+            return table;
         }
 
         [TestMethod]
@@ -99,30 +105,64 @@ namespace HtmlTableHelper.Test
         public void AttributeTableTest()
         {
             var expected = @"<table class=""SomeClass"" ><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
-            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+            //IEnumrable
+            {
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
 
-            var array = sourceData.ToArray().ToHtmlTable(tableAttributes:new {@class="SomeClass"});
-            Assert.AreEqual(array, expected);
+                var html = sourceData.ToArray().ToHtmlTable(tableAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(html, expected);
+            }
+
+            //DataTable
+            {
+                var sourceData = GetTestDataTable();
+
+                var html = sourceData.ToHtmlTable(tableAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(html, expected);
+            }
         }
 
         [TestMethod]
         public void AttributeTrTest()
         {
             var expected = @"<table><thead><tr class=""SomeClass"" ><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr class=""SomeClass"" ><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
-            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+            //IEnumrable
+            {
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
 
-            var html = sourceData.ToArray().ToHtmlTable(trAttributes: new { @class = "SomeClass" });
-            Assert.AreEqual(html, expected);
+                var html = sourceData.ToArray().ToHtmlTable(trAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(html, expected);
+            }
+
+            //DataTable
+            {
+                var sourceData = GetTestDataTable();
+
+                var html = sourceData.ToHtmlTable(trAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(html, expected);
+            }
         }
 
         [TestMethod]
         public void AttributeTdTest()
         {
             var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td class=""SomeClass"" >ITWeiHan</td><td class=""SomeClass"" >25</td><td class=""SomeClass"" >Taiwan</td></tr></tbody></table>";
-            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
 
-            var html = sourceData.ToArray().ToHtmlTable(tdAttributes: new { @class = "SomeClass" });
-            Assert.AreEqual(html, expected);
+            //IEnumrable
+            {
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+
+                var html = sourceData.ToArray().ToHtmlTable(tdAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(html, expected);
+            }
+
+            //DataTable
+            {
+                var sourceData = GetTestDataTable();
+
+                var html = sourceData.ToHtmlTable(tdAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(html, expected);
+            }
         }
 
         [TestMethod]

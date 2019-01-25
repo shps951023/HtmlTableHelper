@@ -2,8 +2,8 @@
 ![](https://img.shields.io/nuget/dt/HtmlTableHelper.svg)
 
 ### Features
+- Mini (DLL Size Only 14KB) and Easy to use.
 - .NET Standard 2.0 (Support ASP.NET MVC5 / ASP.NET Core..)
-- DLL Size Only 14KB
 - Without JSON.NET
 - Support Anonymous Types,Dapper Dynamic Query,List/Array/Set/Enumrable,DataTable,Dictionary
 

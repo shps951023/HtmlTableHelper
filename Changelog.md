@@ -1,3 +1,7 @@
+### version 1.1.5
+- [X] GetHashCode should be replaced by prop.MetadataToken + prop.Module.ModuleVersionId
+- [X] fix DataTable can't use element attribute.
+
 ### version 1.1.4
 - [X] ToHtmlTableByProperties Add ExpressionCaches , it improve the efficiency after the cache created.
 - [X] Support Cunstom Table/TR/TD Attributes.
