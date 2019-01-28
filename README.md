@@ -263,9 +263,9 @@ Result:
 - [X] Support Cunstom Table/TR/TD Attributes.
 - [X] Defalut html encode prevent xss
 
-- [ ] Support Annotation DisplayName/Filiter/i18n..
+- [ ] Support Annotation DisplayName/Sort Columns/Skip Data Column..
 - [ ] Support All Key/Value Type
-- [ ] Support Paging
+
 
 
 <!--
@@ -279,4 +279,8 @@ editable + ajax 可編輯的表格
     - Route問題
     - 增刪改查功能
     - 需要SID
+- [ ] Support Paging
+    using linq skip and take
+    but it'll get trouble in datatable
+    it looks like i have to convert datatable as enumrable
 --->
