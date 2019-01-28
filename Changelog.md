@@ -1,3 +1,6 @@
+### version 1.1.6
+- [X] Support Annotation DisplayName/Filiter/Custom Attribute
+
 ### version 1.1.5
 - [X] Fix Cache Key GetHashCode replaced by type.MetadataToken + type.Module.ModuleVersionId + prop.MetadataToken + prop.Module.ModuleVersionId
 - [X] Fix DataTable element attribute not work.

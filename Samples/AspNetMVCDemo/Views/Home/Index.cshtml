@@ -1,0 +1,10 @@
+﻿
+@{
+    Layout = null;
+}
+
+@Html.ToHtmlTable(new[] { new { Name = "ITWeiHan", Age = "25", Country = "Taiwan" } })
+
+<!--or-->
+
+@Html.Raw(ViewBag.Table)
