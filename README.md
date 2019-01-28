@@ -98,6 +98,37 @@ var notEncodinghtml = sourceData.ToHtmlTable(HTMLTableSetting: htmltablesetting)
 //Result: <table>..<b>ITWeiHan</b>..</table>
 ```
 
+### Extension
+**ASP.NET Core MVC:**  
+
+Create a IHtmlHelperExtension.cs
+```C#
+using System.Collections.Generic;
+using HtmlTableHelper;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Html;
+
+public static class IHelperExtension
+{
+    public static HtmlString ToHtmlTable<T>(this IHtmlHelper htmlHelper
+        , IEnumerable<T> enums)
+    {
+        var html = enums.ToHtmlTable();
+        return new HtmlString(html);
+    }
+}
+```
+
+razor.cshtml 
+```C#
+@Html.ToHtmlTable(new[] { new { Name = "ITWeiHan", Age = "25", Country = "Taiwan" } })
+/*
+Result:<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>
+*/
+```
+
+**ASP.NET MVC 5:** 
+
 
 ### Demo
 **ASP.NET MVC 5 JQuery DataTable Demo:**  
@@ -207,3 +238,10 @@ Read This Page
 [security - Will HTML Encoding prevent all kinds of XSS attacks? - Stack Overflow]
 (https://stackoverflow.com/questions/53728/will-html-encoding-prevent-all-kinds-of-xss-attacks)
 -->
+
+<!---
+editable + ajax 可編輯的表格
+    - Route問題
+    - 增刪改查功能
+    - 需要SID
+--->
