@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace HtmlTableHelper
 {
@@ -15,7 +15,8 @@ namespace HtmlTableHelper
                 foreach (var prop in props)
                 {
                     var data = GetCustomAttribute(prop);
-                    data.memberInfo = prop;
+                    if(data!=null)
+                        data.memberInfo = prop;
                     yield return data;
                 }
             }
@@ -23,6 +24,26 @@ namespace HtmlTableHelper
             public static TableColumnAttribute GetCustomAttribute(MemberInfo memberInfo)
             {
                 return Attribute.GetCustomAttribute(memberInfo, typeof(TableColumnAttribute)) as TableColumnAttribute;
+            }
+
+            public static TableColumnAttribute GetCustomAttributeByProperty(
+                IEnumerable<TableColumnAttribute> customAttributes
+                , MemberInfo memberInfo)
+            {
+                #region Check
+                if (customAttributes == null)
+                {
+                    throw new ArgumentNullException(nameof(customAttributes));
+                }
+
+                if (memberInfo == null)
+                {
+                    throw new ArgumentNullException(nameof(memberInfo));
+                }
+                #endregion
+
+                var firstData = customAttributes.FirstOrDefault();
+                return firstData == null ? null : customAttributes.Where(w => w.memberInfo.Name == memberInfo.Name).FirstOrDefault();
             }
         }
     }

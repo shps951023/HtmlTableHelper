@@ -18,6 +18,19 @@ namespace HtmlTableHelper.Test
         #endregion
 
         [TestMethod]
+        public void Display_Test()
+        {
+            var expected = @"<table><thead><tr><th>Column1</th><th>Column2</th></tr></thead><tbody><tr><td>MyProperty1Value1</td><td>MyProperty1Value2</td></tr><tr><td>MyProperty2Value1</td><td>MyProperty2Value2</td></tr></tbody></table>";
+            var sourceData = new Test[] {
+                new Test { MyProperty1 = "MyProperty1Value1", MyProperty2 = "MyProperty1Value2" },
+                new Test { MyProperty1 = "MyProperty2Value1", MyProperty2 = "MyProperty2Value2" },
+            };
+
+            var html = sourceData.ToHtmlTable();
+            Assert.AreEqual(html, expected);
+        }
+
+        [TestMethod]
         public void GetCustomAttribute_Test()
         {
             var excepted = new[]{
@@ -37,11 +50,11 @@ namespace HtmlTableHelper.Test
         }
         
         [TestMethod]
-        public void RenderHtmlTable_Test()
+        public void GetCustomAttribute_RenderHtmlTable_Test()
         {
-            var type = typeof(Test);
-            var customAttributes = (NestedTypeHelper.CallStaticNestedTypeMethod(typeof(HtmlTableHelper)
-                , "CustomAttributeHelper", "GetCustomAttributes", new[] { type }) as IEnumerable<TableColumnAttribute>).ToList();
+            var paras = new[] { typeof(Test) };
+            var customAttributes = NestedTypeHelper.CallStaticNestedTypeMethod(typeof(HtmlTableHelper)
+                , "CustomAttributeHelper", "GetCustomAttributes", paras) as IEnumerable<TableColumnAttribute>;
             var exceptedHtml = @"<table><tr><th>Column1<th><th>Column2<th></tr><tr><td>Row1Column1</td><td>Row1Column2</td></tr><tr><td>Row2Column1</td><td>Row2Column2</td></tr></table>";
             var sourceData = new Test[] { new Test { MyProperty1 = "Row1Column1", MyProperty2 = "Row1Column2" },
                 new Test { MyProperty1 = "Row2Column1", MyProperty2 = "Row2Column2" }
