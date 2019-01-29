@@ -1,10 +1,7 @@
-﻿using HtmlTableHelper;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
 using System.Web;
 
@@ -12,59 +9,101 @@ namespace HtmlTableHelper
 {
     public static partial class HtmlTableHelper
     {
+        /*  Logic:
+         *      call HtmlTableGenerater(get attributes data and render it to html ) 
+         *      -> call ToHtmlTable(Mapping Type) 
+         *      -> render thead -> render tbody -> call RenderHtmlTable render table html
+         */
         private class HtmlTableGenerater
         {
+            #region Prop
             private static readonly HtmlTableSetting _DefualtHTMLTableSetting = new HtmlTableSetting()
             {
                 IsHtmlEncodeMode = true
             };
-
-            #region Prop
             private HtmlTableSetting _HtmlTableSetting { get; set; }
-            private Dictionary<string,string> _TableAttributes { get; set; }
+            private Dictionary<string, string> _TableAttributes { get; set; }
             private Dictionary<string, string> _TrAttributes { get; set; }
             private Dictionary<string, string> _TdAttributes { get; set; }
+            private string _TableAttHtml { get; set; }
+            private string _TrAttHtml { get; set; }
+            private string _TdAttHtml { get; set; }
+            private IEnumerable<TableColumnAttribute> _customAttributes { get; set; }
             #endregion
 
             public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HtmlTableSetting htmlTableSetting)
             {
+                this._HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting;
                 this._TableAttributes = AttributeToHtml(tableAttributes);
                 this._TrAttributes = AttributeToHtml(trAttributes);
                 this._TdAttributes = AttributeToHtml(tdAttributes);
-                this._HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting;
+                RenderTableTrTdAttributehtml();
+            }
+
+            private void RenderTableTrTdAttributehtml()
+            {
+                this._TableAttHtml = _TableAttributes != null
+                    ? string.Join("", _TableAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
+                    : "";
+                this._TrAttHtml = _TrAttributes != null
+                    ? string.Join("", _TrAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
+                    : "";
+                this._TdAttHtml = _TdAttributes != null
+                    ? string.Join("", _TdAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
+                    : "";
             }
 
             private Dictionary<string, string> AttributeToHtml(object tableAttributes)
             {
-                if (tableAttributes == null) return null;
+                if (tableAttributes == null)
+                {
+                    return null;
+                }
+
                 var type = tableAttributes.GetType();
                 var dic = type.GetProperties()
                     //TODO:Convert to Cache
-                    .Select(prop=>new { Key= prop.Name,Value=prop.GetValue(tableAttributes).ToString() })
-                    .ToDictionary(key=>key.Key,value=>value.Value);
+                    .Select(prop => new { Key = prop.Name, Value = prop.GetValue(tableAttributes).ToString() })
+                    .ToDictionary(key => key.Key, value => value.Value);
                 return dic;
             }
 
-            public string ToHtmlTablByDataTable(System.Data.DataTable dt)
+            private StringBuilder RenderHtmlTable(StringBuilder thead, StringBuilder tbody)
             {
-                var heads = new List<string>();
+                var html = new StringBuilder($"<table{_TableAttHtml}>");
+                html.Append($"<thead><tr{_TrAttHtml}>{thead}</tr></thead>");
+                html.Append($"<tbody>{tbody.ToString()}</tbody>");
+                html.Append("</table>");
+                return html;
+            }
+
+            public string ToHtmlTableByDataTable(System.Data.DataTable dt) //Not Support Annotation
+            {
+                //Head
+                var thead = new StringBuilder();
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
-                    heads.Add(dt.Columns[i].ColumnName);
+                    string thInnerHTML = Encode(dt.Columns[i].ColumnName);
+                    thead.Append($"<th>{thInnerHTML}</th>");
                 }
 
-                var bodys = new List<List<object>>();
+                //Body
+                var tbody = new StringBuilder();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    var list = new List<object>();
-                    bodys.Add(list);
+                    tbody.Append($"<tr{_TrAttHtml}>");
                     for (int j = 0; j < dt.Columns.Count; j++)
                     {
-                        list.Add(dt.Rows[i][j]);
+                        var value = dt.Rows[i][j];
+                        string tdInnerHTML = Encode(value);
+                        tbody.Append($"<td{_TdAttHtml}>{tdInnerHTML}</td>");
                     }
+                    tbody.Append("</tr>");
                 }
 
-                var html = GenerateTableHtml(heads: heads, bodys: bodys);
+                //Table html
+                var html = RenderHtmlTable(thead, tbody);
+
                 return html.ToString();
             }
 
@@ -73,82 +112,104 @@ namespace HtmlTableHelper
                 var type = typeof(T);
                 var props = type.GetProperties().ToList();
 
-                //Check
+                #region Get Custom Attributes
+                _customAttributes = CustomAttributeHelper.GetCustomAttributes(type);
+                #endregion 
+
+                #region Check
                 if (props.Count == 0)
                 {
                     throw new Exception("At least one Property");
                 }
+                #endregion
 
-                var heads = props.Select(s => s.Name);
+                //Head
+                var thead = new StringBuilder();
+                foreach (var p in props)
+                {
+                    var costomAtt = CustomAttributeHelper.GetCustomAttributeByProperty(_customAttributes, p);
+                    string thInnerHTML = costomAtt != null ? costomAtt.DisplayName : Encode(p.Name);
+                    thead.Append($"<th>{thInnerHTML}</th>");
+                }
 
-                var bodys = new List<List<string>>(); //TODO:'new List' this looks like it can be replaced
+                //Body
+                var tbody = new StringBuilder();
                 foreach (var e in enums)
                 {
-                    bodys.Add(props.Select(prop =>
+                    tbody.Append($"<tr{_TrAttHtml}>");
+                    foreach (var prop in props)
                     {
                         var compiledExpression = ExpressionCache.GetOrAddExpressionCache<T>(prop);
                         var value = compiledExpression(e);
-                        return value;
-                    }).ToList());
+                        string tdInnerHTML = Encode(value);
+                        tbody.Append($"<td{_TdAttHtml}>{tdInnerHTML}</td>");
+                    }
+                    tbody.Append("</tr>");
                 }
-                var html = GenerateTableHtml(heads: heads, bodys: bodys);
+
+                //Table html
+                var html = RenderHtmlTable(thead, tbody);
+
                 return html.ToString();
             }
 
-            public string ToHtmlTableByKeyValue(IEnumerable<IDictionary<string, object>> enums)
+
+            //Q:    Why use two overload ToHtmlTableByKeyValue , it looks like same logic?
+            //A:    Because IDictionary<TKey, TValue> and IDictionary they are not same type.
+            public string ToHtmlTableByKeyValue<TKey, TValue>(IEnumerable<IDictionary<TKey, TValue>> enums)
             {
-                var html = GenerateTableHtml(heads: enums.First().Keys, bodys: enums.Select(s => s.Values));
+                //Head
+                var thead = new StringBuilder();
+                foreach (var p in enums.First().Keys)
+                {
+                    string thInnerHTML = Encode(p);
+                    thead.Append($"<th>{thInnerHTML}</th>");
+                }
+
+                //Body
+                var tbody = new StringBuilder();
+                foreach (var values in enums)
+                {
+                    tbody.Append($"<tr{_TrAttHtml}>");
+                    foreach (var v in values)
+                    {
+                        string tdInnerHTML = Encode(v.Value);
+                        tbody.Append($"<td{_TdAttHtml}>{tdInnerHTML}</td>");
+                    }
+                    tbody.Append("</tr>");
+                }
+
+                //Table html
+                var html = RenderHtmlTable(thead, tbody);
                 return html.ToString();
             }
 
             public string ToHtmlTableByKeyValue(IEnumerable<IDictionary> enums)
             {
-                var html = GenerateTableHtml(heads: enums.First().Keys, bodys: enums.Select(s => s.Values));
-                return html.ToString();
-            }
-
-            private StringBuilder GenerateTableHtml(IEnumerable heads
-                , IEnumerable<IEnumerable> bodys)
-            {
-                #region attrs
-                var tableAttHtml = _TableAttributes != null
-                    ? string.Join("", _TableAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
-                    : "";
-                var trAttHtml = _TrAttributes != null
-                    ? string.Join("", _TrAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
-                    : "";
-                var tdAttHtml = _TdAttributes != null
-                    ? string.Join("", _TdAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
-                    : "";
-                #endregion
-
-                var html = new StringBuilder($"<table{tableAttHtml}>");
-
                 //Head
-                html.Append($"<thead><tr{trAttHtml}>");
-                foreach (var p in heads)
+                var thead = new StringBuilder();
+                foreach (var p in enums.First().Keys)
                 {
                     string thInnerHTML = Encode(p);
-                    html.Append($"<th>{thInnerHTML}</th>");
+                    thead.Append($"<th>{thInnerHTML}</th>");
                 }
-                html.Append("</tr></thead>");
 
                 //Body
-                html.Append("<tbody>");
-                foreach (var values in bodys)
+                var tbody = new StringBuilder();
+                foreach (var values in enums)
                 {
-                    html.Append($"<tr{trAttHtml}>");
-                    foreach (var v in values)
+                    tbody.Append($"<tr{_TrAttHtml}>");
+                    foreach (var v in values.Values)
                     {
                         string tdInnerHTML = Encode(v);
-                        html.Append($"<td{tdAttHtml}>{tdInnerHTML}</td>");
+                        tbody.Append($"<td{_TdAttHtml}>{tdInnerHTML}</td>");
                     }
-                    html.Append("</tr>");
+                    tbody.Append("</tr>");
                 }
-                html.Append("</tbody>");
 
-                html.Append("</table>");
-                return html;
+                //Table html
+                var html = RenderHtmlTable(thead, tbody);
+                return html.ToString();
             }
 
             private string Encode(object obj)

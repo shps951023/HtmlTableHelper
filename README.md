@@ -23,7 +23,7 @@ dotnet add package HtmlTableHelper
 
 ### Get Start
 
-List/Array/Set/Enumrable non Key/Value Type Example
+##### List/Array/Set/Enumrable non Key/Value Type Example
 ```C#
 using HtmlTableHelper;
 ..
@@ -35,7 +35,7 @@ Result:
 */
 ```
 
-Dapper Example
+##### Dapper Example
 ```C#
 using (var cn = "Your Connection")
 {
@@ -44,7 +44,8 @@ using (var cn = "Your Connection")
 }
 ```
 
-Dictionary Example
+##### Dictionary Example 
+`<string, object>` and `<int, object>` support easy ToHtmlTable:
 ```C#
 var sourceData = new[] {
     new Dictionary<string, object> (){
@@ -53,6 +54,16 @@ var sourceData = new[] {
 };
 var tablehtml = sourceData.ToHtmlTable();
 ```
+
+<!--
+**But** anothor Key/Value Type please use `ToHtmlTableByDictionary`
+```C#
+var sourceData = new[] {
+    new Dictionary<SomeKeyType, SomeValueType> (){...}
+};
+var tablehtml = sourceData.ToHtmlTableByDictionary();
+```
+--->
 
 **Custom Table/TR/TD Attributes (Dynamic Type)**
 
@@ -263,9 +274,9 @@ Result:
 - [X] Support Cunstom Table/TR/TD Attributes.
 - [X] Defalut html encode prevent xss
 
-- [ ] Support Annotation DisplayName/Filiter/i18n..
+- [ ] Support Annotation DisplayName/Sort Columns/Skip Data Column..
 - [ ] Support All Key/Value Type
-- [ ] Support Paging
+
 
 
 <!--
@@ -279,4 +290,8 @@ editable + ajax 可編輯的表格
     - Route問題
     - 增刪改查功能
     - 需要SID
+- [ ] Support Paging
+    using linq skip and take
+    but it'll get trouble in datatable
+    it looks like i have to convert datatable as enumrable
 --->
