@@ -23,7 +23,7 @@ dotnet add package HtmlTableHelper
 
 ### Get Start
 
-List/Array/Set/Enumrable non Key/Value Type Example
+##### List/Array/Set/Enumrable non Key/Value Type Example
 ```C#
 using HtmlTableHelper;
 ..
@@ -35,7 +35,7 @@ Result:
 */
 ```
 
-Dapper Example
+##### Dapper Example
 ```C#
 using (var cn = "Your Connection")
 {
@@ -44,7 +44,8 @@ using (var cn = "Your Connection")
 }
 ```
 
-Dictionary Example
+##### Dictionary Example 
+`<string, object>` and `<int, object>` support easy ToHtmlTable:
 ```C#
 var sourceData = new[] {
     new Dictionary<string, object> (){
@@ -53,6 +54,16 @@ var sourceData = new[] {
 };
 var tablehtml = sourceData.ToHtmlTable();
 ```
+
+<!--
+**But** anothor Key/Value Type please use `ToHtmlTableByDictionary`
+```C#
+var sourceData = new[] {
+    new Dictionary<SomeKeyType, SomeValueType> (){...}
+};
+var tablehtml = sourceData.ToHtmlTableByDictionary();
+```
+--->
 
 **Custom Table/TR/TD Attributes (Dynamic Type)**
 
