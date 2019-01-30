@@ -2,7 +2,7 @@
 ![](https://img.shields.io/nuget/dt/HtmlTableHelper.svg)
 
 ### Features
-- Mini (DLL Size Only 14KB) and Easy to use.
+- Mini (DLL Size Only 18KB) and Easy to use.
 - .NET Standard 2.0 (Support ASP.NET MVC5 / ASP.NET Core..)
 - Without JSON.NET
 - Support Anonymous Types,Dapper Dynamic Query,List/Array/Set/Enumrable,DataTable,Dictionary
@@ -90,9 +90,34 @@ Result:
 </table>
 */
 ```
-  
 
-**HTMLTableSetting**  
+##### Attribute Annotation
+
+###### 1. Display : 
+
+```C#
+public class ModelClassWithDisplayAttr
+{
+    [TableColumn(DisplayName = "Column1")] //MyProperty1 property will render thead-td's innertext : "Column1"
+    public string MyProperty1 { get; set; }
+    [TableColumn(DisplayName = "Column2")] //MyProperty2 property will render thead-td's innertext : "Column2"
+    public string MyProperty2 { get; set; }
+}
+```
+
+###### 2. Skip : 
+```C#
+public class ModelClassWithSkipAttr
+{
+    [TableColumn( Skip = true)]
+    public string MyProperty1 { get; set; } //MyProperty1 will not render html
+    public string MyProperty2 { get; set; }
+}
+```
+
+
+##### HTMLTableSetting
+
 Configurable InnerHtml Encoding (Recommended not to do so without a specific reason,because XSS Attack)
 ```C#
 var sourceData = new[] { new { Name = "<b>ITWeiHan</b>" } };
