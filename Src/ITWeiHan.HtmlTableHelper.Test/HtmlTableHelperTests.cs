@@ -44,6 +44,23 @@ namespace HtmlTableHelper.Test
             Assert.AreEqual(enums, expected);
         }
 
+        public class TestClass
+        {
+            public string MyProperty1 { get; set; }
+            public string MyProperty2 { get; set; }
+        }
+
+        [TestMethod]
+        public void Prop_Is_Null_Test()
+        {
+            var excepted = "<table><thead><tr><th>MyProperty1</th><th>MyProperty2</th></tr></thead><tbody><tr><td>test1</td><td></td></tr></tbody></table>";
+            var soucreData = new TestClass[]{
+                 new TestClass(){MyProperty1="test1"}
+            };
+            var html = soucreData.ToHtmlTable();
+            Assert.AreEqual(excepted, html);
+        }
+
         [TestMethod]
         public void Cache_Test()
         {
@@ -56,16 +73,17 @@ namespace HtmlTableHelper.Test
         [TestMethod]
         public void DapperDynamicQuery_Test()
         {
-            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th><th>Phone</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td><td></td></tr></tbody></table>";
             const string _path = "Test.sqlite";
             SQLiteConnection.CreateFile(_path);
             using (var cn = new SQLiteConnection($"Data Source={_path};Version=3;"))
             {
-                var sourceData = cn.Query(@"select 'ITWeiHan' Name,25 Age,'Taiwan' Country");
+                var sourceData = cn.Query(@"select 'ITWeiHan' Name,25 Age,'Taiwan' Country,null Phone");
                 var html = sourceData.ToHtmlTable();
                 Assert.AreEqual(html, expected);
             }
         }
+
 
         [TestMethod]
         public void DataTableToHtml_Test()

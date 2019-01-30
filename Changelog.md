@@ -1,3 +1,6 @@
+### version 1.1.7
+- [X] fix ArgumentNullException when property is null
+
 ### version 1.1.6
 - [X] Support Annotation DisplayName/Skip Custom Attribute
 

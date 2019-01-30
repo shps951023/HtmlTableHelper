@@ -69,6 +69,16 @@ namespace HtmlTableHelper.Test
             Assert.AreEqual(excepted, html);
         }
 
+        public class ModelClassWithDisplayAttr
+        {
+            [TableColumn(DisplayName = "Column1")] //MyProperty1 property will render thead-td's innertext : "Column1"
+            public string MyProperty1 { get; set; }
+            [TableColumn(DisplayName = "Column2")] //MyProperty2 property will render thead-td's innertext : "Column2"
+            public string MyProperty2 { get; set; }
+        }
+
+
+
         [TestMethod]
         public void GetCustomAttribute_Test()
         {

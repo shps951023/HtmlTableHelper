@@ -216,7 +216,10 @@ namespace HtmlTableHelper
 
             private string Encode(object obj)
             {
-                return _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(obj.ToString()) : obj.ToString();
+                if(obj!=null)
+                    return _HtmlTableSetting.IsHtmlEncodeMode ? HttpUtility.HtmlEncode(obj.ToString()) : obj.ToString();
+                else
+                    return "";
             }
         }
     }
