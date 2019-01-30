@@ -12,7 +12,7 @@ namespace HtmlTableHelper
         {
             private static Dictionary<string, object> ExpressionCaches = new Dictionary<string, object>();
             private readonly static object _Lock = new object();
-            public static Func<T, string> GetOrAddExpressionCache<T>(PropertyInfo prop)
+            public static Func<T, object> GetOrAddExpressionCache<T>(PropertyInfo prop)
             {
                 //Done: GetHashCode should be replaced by prop.MetadataToken + prop.Module.ModuleVersionId
                 //https://codereview.stackexchange.com/questions/211976/propertyinfo-getvalue-and-expression-cache-getvalue/212056#212056
@@ -27,19 +27,19 @@ namespace HtmlTableHelper
                             ExpressionCaches[key] = CompileGetValueExpression<T>(prop);
                     }
                 }
-                return ExpressionCaches[key] as Func<T, string>;
+                return ExpressionCaches[key] as Func<T, object>;
             }
 
-            private static Func<T, string> CompileGetValueExpression<T>(PropertyInfo propertyInfo)
+            private static Func<T, object> CompileGetValueExpression<T>(PropertyInfo propertyInfo)
             {
                 if (typeof(T) != propertyInfo.DeclaringType)
                 {
                     throw new Exception("Parameter T Type should be equals propertyInfo.DeclaringType");
                 }
-                var instance = Expression.Parameter(propertyInfo.DeclaringType);
+                var instance = Expression.Parameter(propertyInfo.DeclaringType, "i");
                 var property = Expression.Property(instance, propertyInfo);
-                var toString = Expression.Call(property, "ToString", Type.EmptyTypes);
-                return Expression.Lambda<Func<T, string>>(toString, instance).Compile();
+                var convert = Expression.TypeAs(property, typeof(object));
+                return Expression.Lambda<Func<T, object>>(convert, instance).Compile();
             }
         }
     }
