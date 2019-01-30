@@ -288,21 +288,6 @@ Result:
 ```
 -->
 
-### TODO
-- [X] NuGet
-- [X] JQuery DataTable Demo
-- [X] Dapper Demo
-- [X] ASP.NET Core Demo
-- [X] Support Dapper Dynamic Query
-- [X] Support Dictionary
-- [X] Support DataTable
-- [X] Support Cunstom Table/TR/TD Attributes.
-- [X] Defalut html encode prevent xss
-
-- [ ] Support Annotation DisplayName/Sort Columns/Skip Data Column..
-- [ ] Support All Key/Value Type
-
-
 
 <!--
 Read This Page
