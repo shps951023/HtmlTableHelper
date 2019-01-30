@@ -9,11 +9,6 @@ namespace HtmlTableHelper
 {
     public static partial class HtmlTableHelper
     {
-        /*  Logic:
-         *      call HtmlTableGenerater(get attributes data and render it to html ) 
-         *      -> call ToHtmlTable(Mapping Type) 
-         *      -> render thead -> render tbody -> call RenderHtmlTable render table html
-         */
         private class HtmlTableGenerater
         {
             #region Prop
@@ -109,15 +104,10 @@ namespace HtmlTableHelper
 
             public string ToHtmlTableByProperties<T>(IEnumerable<T> enums)
             {
-                var type = typeof(T);
-                var props = type.GetProperties().ToList();
-
-                #region Get Custom Attributes
-                _customAttributes = CustomAttributeHelper.GetCustomAttributes(type);
-                #endregion 
+                System.Reflection.PropertyInfo[] props = GetGetPropertiesByAttrSkipFiliter(type:typeof(T));
 
                 #region Check
-                if (props.Count == 0)
+                if (props.Length == 0)
                 {
                     throw new Exception("At least one Property");
                 }
@@ -153,6 +143,18 @@ namespace HtmlTableHelper
                 return html.ToString();
             }
 
+            private System.Reflection.PropertyInfo[] GetGetPropertiesByAttrSkipFiliter(Type type)
+            {
+                var props = type.GetProperties();
+                _customAttributes = CustomAttributeHelper.GetCustomAttributes(type);
+                if (_customAttributes.FirstOrDefault() != null)
+                {
+                    _customAttributes = _customAttributes.Where(attr => attr.Skip == false);
+                    var notSkipAttrsName = _customAttributes.Select(attr => attr.memberInfo.Name);
+                    props = props.Where(prop => notSkipAttrsName.Contains(prop.Name)).ToArray();
+                }
+                return props;
+            }
 
             //Q:    Why use two overload ToHtmlTableByKeyValue , it looks like same logic?
             //A:    Because IDictionary<TKey, TValue> and IDictionary they are not same type.

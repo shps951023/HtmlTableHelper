@@ -25,10 +25,10 @@ public static class NestedTypeHelper
         }
         #endregion
 
-        var nestedType = type.GetTypeInfo().DeclaredNestedTypes.FirstOrDefault(w => w.Name == nestedClassName)
+        var nestedType = type.GetTypeInfo().DeclaredNestedTypes.SingleOrDefault(w => w.Name == nestedClassName)
             ?? throw new Exception($"{nameof(nestedClassName)} {nestedClassName}'s nestedType not found.");
         
-        var methodInfo = nestedType.DeclaredMethods.FirstOrDefault(w => w.Name == methodName)
+        var methodInfo = nestedType.DeclaredMethods.SingleOrDefault(w => w.Name == methodName)
             ?? throw new Exception($"{nameof(methodName)} {methodName}'s method not found.");
         return methodInfo.Invoke(null, parameters);
     }

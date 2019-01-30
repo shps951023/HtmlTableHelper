@@ -7,7 +7,7 @@ namespace HtmlTableHelper
 {
     public static partial class HtmlTableHelper
     {
-        private static class CustomAttributeHelper
+        internal static class CustomAttributeHelper
         {
             public static IEnumerable<TableColumnAttribute> GetCustomAttributes(System.Type type)
             {
