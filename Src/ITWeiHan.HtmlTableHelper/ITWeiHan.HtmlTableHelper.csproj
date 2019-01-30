@@ -12,9 +12,9 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/shps951023/HtmlTableHelper</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/shps951023/ImageHosting/master/img/2019-01-17.13.18.32-image.png</PackageIconUrl>
-    <AssemblyVersion>1.1.5.0</AssemblyVersion>
-    <FileVersion>1.1.5.0</FileVersion>
-    <Version>1.1.5</Version>
+    <AssemblyVersion>1.1.6.0</AssemblyVersion>
+    <FileVersion>1.1.6.0</FileVersion>
+    <Version>1.1.6</Version>
     <PackageId>HtmlTableHelper</PackageId>
     <PackageReleaseNotes>### version 1.1.5
 - [X] Fix Cache Key GetHashCode replaced by type.MetadataToken + type.Module.ModuleVersionId + prop.MetadataToken + prop.Module.ModuleVersionId
