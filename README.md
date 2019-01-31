@@ -45,13 +45,8 @@ using (var cn = "Your Connection")
 ```
 
 ##### Dictionary Example 
-`<string, object>` and `<int, object>` support easy ToHtmlTable:
 ```C#
-var sourceData = new[] {
-    new Dictionary<string, object> (){
-        {"Name" , "ITWeiHan" },{"Age",25},{"Country","Taiwan"}
-    }
-};
+var sourceData = new[] {new Dictionary<string, object> (){{"Name" , "ITWeiHan" },{"Age",25},{"Country","Taiwan"}}};
 var tablehtml = sourceData.ToHtmlTable();
 ```
 
@@ -69,10 +64,8 @@ var tablehtml = sourceData.ToHtmlTableByDictionary();
 
 ```C#
 var data = /*List/Array/Set/Enumrable..*/;
-var html = data.ToHtmlTable(
-    tableAttributes: new { @class = "SomeClass"} //this is dynamic type, support all attribute 
-    ,trAttributes: new { ID = "SomeID" }
-    ,tdAttributes: new { width = "120 px" }
+var html = data.ToHtmlTable( tableAttributes: new { @class = "SomeClass"} //this is dynamic type, support all attribute 
+    ,trAttributes: new { ID = "SomeID" },tdAttributes: new { width = "120 px" }
 );
 /*
 Result:
@@ -199,8 +192,6 @@ public static class HtmlHelperExtension
 }
 ```
 
-
-
 ### Demo
 **ASP.NET MVC 5 JQuery DataTable Demo:**  
 *Demo Link:*[ASP.NET MVC 5 Demo](https://htmltablehelperdemo.azurewebsites.net/)
@@ -256,17 +247,17 @@ public class Startup
     {
         app.Run(async (context) =>
         {
-            var sourceData = new[] {
-                new Dictionary<string, object> (){
-                    {"Name" , "ITWeiHan" },{"Age",25},{"Country","Taiwan"}
-                }
-            };
+            var sourceData = new[] { new { Name = "ITWeiHan", Age = "25",Country = "Taiwan" } };
             var tablehtml = sourceData.ToHtmlTable();
             await context.Response.WriteAsync(tablehtml);
         });
     }
 }
 ```
+
+#### TODO:
+- [ ] Support EF Model
+- [ ] Support property use custom html attribute 
 
 <!--
 指定欄位
