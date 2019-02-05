@@ -3,7 +3,7 @@
 
 ### Features
 - Mini (DLL Size Only 18KB) and Easy to use.
-- .NET Standard 2.0 (Support ASP.NET MVC5 / ASP.NET Core..)
+- Support .NET Standard 2.0/.NET 4.5
 - Without JSON.NET
 - Support Anonymous Types,Dapper Dynamic Query,List/Array/Set/Enumrable,DataTable,Dictionary
 
@@ -256,6 +256,7 @@ public class Startup
 ```
 
 #### TODO:
+- [ ] Support .NET 4.0
 - [ ] Support EF Model
 - [ ] Support property use custom html attribute 
 

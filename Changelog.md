@@ -1,3 +1,6 @@
+### version 1.1.8
+- [X] Support .NET 4.5
+
 ### version 1.1.7
 - [X] fix ArgumentNullException when property is null
 
