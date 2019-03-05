@@ -21,6 +21,10 @@ or the `dotnet` command line:
 dotnet add package HtmlTableHelper
 ```
 
+### Fiddle Demo:
+- [HtmlTableHelper ConsoleDemo](https://dotnetfiddle.net/DzddCl)
+- [HtmlTableHelper ASP.NET MVC Demo (JQuery DataTable)](https://dotnetfiddle.net/u9Ia6M)
+
 ### Get Start
 
 ##### List/Array/Set/Enumrable non Key/Value Type Example
@@ -194,8 +198,6 @@ public static class HtmlHelperExtension
 
 ### Demo
 **ASP.NET MVC 5 JQuery DataTable Demo:**  
-*Demo Link:*[ASP.NET MVC 5 Demo](https://htmltablehelperdemo.azurewebsites.net/)
-![2019-01-17.10.34.47-image.png](https://raw.githubusercontent.com/shps951023/ImageHosting/master/img/2019-01-17.10.34.47-image.png)
 ```C#
 using HtmlTableHelper;
 //..
@@ -255,12 +257,12 @@ public class Startup
 }
 ```
 
+<!--
 #### TODO:
 - [ ] Support .NET 4.0
 - [ ] Support EF Model
 - [ ] Support property use custom html attribute 
 
-<!--
 指定欄位
 ```C#
 using HtmlTableHelper;
