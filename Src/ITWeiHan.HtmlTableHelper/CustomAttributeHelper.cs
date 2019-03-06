@@ -11,7 +11,7 @@ namespace HtmlTableHelper
         {
             public static IEnumerable<TableColumnAttribute> GetCustomAttributes(System.Type type)
             {
-                var props = type.GetProperties();
+                var props = TypePropertiesCacheHelper.GetTypePropertiesCache(type);
                 foreach (var prop in props)
                 {
                     var data = GetCustomAttribute(prop);
