@@ -56,7 +56,7 @@ namespace HtmlTableHelper
                 }
 
                 var type = tableAttributes.GetType();
-                var dic = type.GetProperties()
+                var dic = TypePropertiesCacheHelper.GetTypePropertiesCache(type)
                     //TODO:Convert to Cache
                     .Select(prop => new { Key = prop.Name, Value = prop.GetValue(tableAttributes).ToString() })
                     .ToDictionary(key => key.Key, value => value.Value);
@@ -104,10 +104,10 @@ namespace HtmlTableHelper
 
             public string ToHtmlTableByProperties<T>(IEnumerable<T> enums)
             {
-                System.Reflection.PropertyInfo[] props = GetGetPropertiesByAttrSkipFiliter(type:typeof(T));
+                var props = GetGetPropertiesByAttrSkipFiliter(type:typeof(T));
 
                 #region Check
-                if (props.Length == 0)
+                if (props.Count == 0)
                 {
                     throw new Exception("At least one Property");
                 }
@@ -143,9 +143,9 @@ namespace HtmlTableHelper
                 return html.ToString();
             }
 
-            private System.Reflection.PropertyInfo[] GetGetPropertiesByAttrSkipFiliter(Type type)
+            private IList<System.Reflection.PropertyInfo> GetGetPropertiesByAttrSkipFiliter(Type type)
             {
-                var props = type.GetProperties();
+                var props = TypePropertiesCacheHelper.GetTypePropertiesCache(type);
                 _customAttributes = CustomAttributeHelper.GetCustomAttributes(type);
                 if (_customAttributes.FirstOrDefault() != null)
                 {
