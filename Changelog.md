@@ -1,3 +1,6 @@
+### version 1.1.9
+- [X] Support .NET 4.0
+
 ### version 1.1.8
 - [X] Support .NET 4.5
 
