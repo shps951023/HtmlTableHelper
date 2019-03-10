@@ -104,7 +104,8 @@ namespace HtmlTableHelper
 
             public string ToHtmlTableByProperties<T>(IEnumerable<T> enums)
             {
-                var props = GetGetPropertiesByAttrSkipFiliter(type:typeof(T));
+                var type = typeof(T);
+                var props = GetGetPropertiesByAttrSkipFiliter(type);
 
                 #region Check
                 if (props.Count == 0)
@@ -129,8 +130,7 @@ namespace HtmlTableHelper
                     tbody.Append($"<tr{_TrAttHtml}>");
                     foreach (var prop in props)
                     {
-                        var compiledExpression = ExpressionCache.GetOrAddExpressionCache<T>(prop);
-                        var value = compiledExpression(e);
+                        var value = TypePropertiesCacheHelper.GetValueFromExpressionCache(type, prop, e);
                         string tdInnerHTML = Encode(value);
                         tbody.Append($"<td{_TdAttHtml}>{tdInnerHTML}</td>");
                     }
