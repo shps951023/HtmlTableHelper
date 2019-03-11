@@ -12,13 +12,13 @@ namespace HtmlTableHelper
 
         public static string ToHtmlTable(this System.Data.DataTable datatable, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = new HtmlTableGenerater(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
+            var htmltablegenerater = HtmlTableGeneraterFactory.CreateInstance(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
             return htmltablegenerater.ToHtmlTableByDataTable(datatable);
         }
 
         private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = new HtmlTableGenerater(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
+            var htmltablegenerater = HtmlTableGeneraterFactory.CreateInstance(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
 
             // Q:   Why not only IEnumerable<IDictionary> ?
             // A:   Example Dapper Dynamic Query Only implement IDictionary<string,object> without IDictionary

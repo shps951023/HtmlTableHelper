@@ -12,9 +12,9 @@ namespace HtmlTableHelper
         {
             internal static readonly System.Collections.Concurrent.ConcurrentDictionary<RuntimeTypeHandle, IList<PropertyInfo>> TypeProperties
                   = new System.Collections.Concurrent.ConcurrentDictionary<RuntimeTypeHandle, IList<PropertyInfo>>();
+            /*ConcurrentDictionary is thread safe from [c# - Is the ConcurrentDictionary thread-safe to the point that I can use it for a static cache? - Stack Overflow](https://stackoverflow.com/questions/6739193/is-the-concurrentdictionary-thread-safe-to-the-point-that-i-can-use-it-for-a-sta)*/
             internal static readonly System.Collections.Concurrent.ConcurrentDictionary<string, object> TypePropertieValueFunction
                  = new System.Collections.Concurrent.ConcurrentDictionary<string, object>();
-            private readonly static object _Lock = new object();
 
             public static IList<PropertyInfo> GetTypePropertiesCache(Type type)
             {
@@ -22,7 +22,6 @@ namespace HtmlTableHelper
                     return pis;
                 return TypeProperties[type.TypeHandle] = type.GetProperties().ToList();
             }
-
 
             public static object GetValueFromExpressionCache<T>(System.Type type, System.Reflection.PropertyInfo propertyInfo, T instance)
             {
@@ -36,8 +35,7 @@ namespace HtmlTableHelper
                 else
                 {
                     function = CompileGetValueExpression<T>(propertyInfo);
-                    lock (_Lock)
-                        TypePropertieValueFunction[key] = function;
+                    TypePropertieValueFunction[key] = function;
                 }
                 return function(instance);
             }
@@ -47,7 +45,7 @@ namespace HtmlTableHelper
                 var instance = Expression.Parameter(propertyInfo.DeclaringType, "i");
                 var property = Expression.Property(instance, propertyInfo);
                 var convert = Expression.TypeAs(property, typeof(object));
-                var lambda = Expression.Lambda<Func<T, object>>(convert, instance);
+                var lambda = Expression.Lambda<Func<T, object>>(convert, instance); 
                 return lambda.Compile();
             }
         }
