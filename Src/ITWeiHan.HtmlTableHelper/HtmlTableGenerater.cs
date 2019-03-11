@@ -3,39 +3,65 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace HtmlTableHelper
 {
     public static partial class HtmlTableHelper
     {
-        private class HtmlTableGenerater
+        private class HtmlTableGeneraterFactory
         {
-            #region Prop
-            private static readonly HtmlTableSetting _DefualtHTMLTableSetting = new HtmlTableSetting()
+            internal static readonly HtmlTableSetting _DefualtHTMLTableSetting = new HtmlTableSetting()
             {
                 IsHtmlEncodeMode = true
             };
-            private HtmlTableSetting _HtmlTableSetting { get; set; }
-            private Dictionary<string, string> _TableAttributes { get; set; }
-            private Dictionary<string, string> _TrAttributes { get; set; }
-            private Dictionary<string, string> _TdAttributes { get; set; }
-            private string _TableAttHtml { get; set; }
-            private string _TrAttHtml { get; set; }
-            private string _TdAttHtml { get; set; }
-            private IEnumerable<TableColumnAttribute> _customAttributes { get; set; }
-            #endregion
 
-            public HtmlTableGenerater(object tableAttributes, object trAttributes, object tdAttributes, HtmlTableSetting htmlTableSetting)
+            public static HtmlTableGenerater CreateInstance<T1, T2, T3>(T1 tableAttributes, T2 trAttributes, T3 tdAttributes, HtmlTableSetting htmlTableSetting)
             {
-                this._HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting;
-                this._TableAttributes = AttributeToHtml(tableAttributes);
-                this._TrAttributes = AttributeToHtml(trAttributes);
-                this._TdAttributes = AttributeToHtml(tdAttributes);
-                RenderTableTrTdAttributehtml();
+                var htmltablegenerater = new HtmlTableGenerater();
+                htmltablegenerater._HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting;
+                htmltablegenerater._TableAttributes = AttributeToHtml(tableAttributes);
+                htmltablegenerater._TrAttributes = AttributeToHtml(trAttributes);
+                htmltablegenerater._TdAttributes = AttributeToHtml(tdAttributes);
+                htmltablegenerater.RenderTableTrTdAttributehtml();
+                return htmltablegenerater;
             }
 
-            private void RenderTableTrTdAttributehtml()
+            private static Dictionary<string, string> AttributeToHtml<T>(T tableAttributes)
+            {
+                if (tableAttributes == null)
+                    return null;
+
+                var type = tableAttributes.GetType();
+                var dic = TypePropertiesCacheHelper.GetTypePropertiesCache(type)
+                    //.Select(prop => new { Key = prop.Name, Value = TypePropertiesCacheHelper.GetValueFromExpressionCache(type, prop, tableAttributes).ToString() })
+#if !NET40
+                    .Select(prop => new { Key = prop.Name, Value = prop.GetValue(tableAttributes).ToString() })
+#endif
+#if NET40
+                    .Select(prop => new { Key = prop.Name, Value = prop.GetValue(tableAttributes,null).ToString() })
+#endif
+                    .ToDictionary(key => key.Key, value => value.Value);
+                return dic;
+            }
+        }
+
+        private class HtmlTableGenerater
+        {
+#region Prop
+
+            internal HtmlTableSetting _HtmlTableSetting { get; set; }
+            internal Dictionary<string, string> _TableAttributes { get; set; }
+            internal Dictionary<string, string> _TrAttributes { get; set; }
+            internal Dictionary<string, string> _TdAttributes { get; set; }
+            internal string _TableAttHtml { get; set; }
+            internal string _TrAttHtml { get; set; }
+            internal string _TdAttHtml { get; set; }
+            internal IEnumerable<TableColumnAttribute> _customAttributes { get; set; }
+#endregion
+
+            internal HtmlTableGenerater(){}
+
+            internal void RenderTableTrTdAttributehtml()
             {
                 this._TableAttHtml = _TableAttributes != null
                     ? string.Join("", _TableAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
@@ -46,21 +72,6 @@ namespace HtmlTableHelper
                 this._TdAttHtml = _TdAttributes != null
                     ? string.Join("", _TdAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
-            }
-
-            private Dictionary<string, string> AttributeToHtml(object tableAttributes)
-            {
-                if (tableAttributes == null)
-                {
-                    return null;
-                }
-
-                var type = tableAttributes.GetType();
-                var dic = TypePropertiesCacheHelper.GetTypePropertiesCache(type)
-                    //TODO:Convert to Cache
-                    .Select(prop => new { Key = prop.Name, Value = prop.GetValue(tableAttributes).ToString() })
-                    .ToDictionary(key => key.Key, value => value.Value);
-                return dic;
             }
 
             private StringBuilder RenderHtmlTable(StringBuilder thead, StringBuilder tbody)
@@ -104,14 +115,15 @@ namespace HtmlTableHelper
 
             public string ToHtmlTableByProperties<T>(IEnumerable<T> enums)
             {
-                var props = GetGetPropertiesByAttrSkipFiliter(type:typeof(T));
+                var type = typeof(T);
+                var props = GetGetPropertiesByAttrSkipFiliter(type);
 
-                #region Check
+#region Check
                 if (props.Count == 0)
                 {
                     throw new Exception("At least one Property");
                 }
-                #endregion
+#endregion
 
                 //Head
                 var thead = new StringBuilder();
@@ -129,8 +141,7 @@ namespace HtmlTableHelper
                     tbody.Append($"<tr{_TrAttHtml}>");
                     foreach (var prop in props)
                     {
-                        var compiledExpression = ExpressionCache.GetOrAddExpressionCache<T>(prop);
-                        var value = compiledExpression(e);
+                        var value = TypePropertiesCacheHelper.GetValueFromExpressionCache(type, prop, e);
                         string tdInnerHTML = Encode(value);
                         tbody.Append($"<td{_TdAttHtml}>{tdInnerHTML}</td>");
                     }
