@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ValueGetter;
 
 namespace HtmlTableHelper
 {
@@ -11,7 +12,7 @@ namespace HtmlTableHelper
         {
             public static IEnumerable<TableColumnAttribute> GetCustomAttributes(System.Type type)
             {
-                var props = TypePropertiesCacheHelper.GetTypePropertiesCache(type);
+                var props = type.GetPropertiesFromCache();
                 foreach (var prop in props)
                 {
                     var data = GetCustomAttribute(prop);

@@ -51,7 +51,7 @@ More Details in Github Link : [HtmlTableHelper: Mini C# IEnumerable object to HT
 </PackageReleaseNotes>
     <Product>HtmlTableHelper</Product>
     <NeutralLanguage>en</NeutralLanguage>
-    <PackageTags>HTML,Table,Template,Generater,Easy</PackageTags>
+    <PackageTags>ITWeiHan,HTML,Table,Template,Generater,Easy</PackageTags>
     <RepositoryType>Github</RepositoryType>
   </PropertyGroup>
 

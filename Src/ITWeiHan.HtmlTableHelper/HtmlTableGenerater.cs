@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ValueGetter;
 
 namespace HtmlTableHelper
 {
@@ -17,11 +18,13 @@ namespace HtmlTableHelper
 
             public static HtmlTableGenerater CreateInstance<T1, T2, T3>(T1 tableAttributes, T2 trAttributes, T3 tdAttributes, HtmlTableSetting htmlTableSetting)
             {
-                var htmltablegenerater = new HtmlTableGenerater();
-                htmltablegenerater._HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting;
-                htmltablegenerater._TableAttributes = AttributeToHtml(tableAttributes);
-                htmltablegenerater._TrAttributes = AttributeToHtml(trAttributes);
-                htmltablegenerater._TdAttributes = AttributeToHtml(tdAttributes);
+                var htmltablegenerater = new HtmlTableGenerater
+                {
+                    _HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting,
+                    _TableAttributes = AttributeToHtml(tableAttributes),
+                    _TrAttributes = AttributeToHtml(trAttributes),
+                    _TdAttributes = AttributeToHtml(tdAttributes)
+                };
                 htmltablegenerater.RenderTableTrTdAttributehtml();
                 return htmltablegenerater;
             }
@@ -32,15 +35,7 @@ namespace HtmlTableHelper
                     return null;
 
                 var type = tableAttributes.GetType();
-                var dic = TypePropertiesCacheHelper.GetTypePropertiesCache(type)
-                    //.Select(prop => new { Key = prop.Name, Value = TypePropertiesCacheHelper.GetValueFromExpressionCache(type, prop, tableAttributes).ToString() })
-#if !NET40
-                    .Select(prop => new { Key = prop.Name, Value = prop.GetValue(tableAttributes).ToString() })
-#endif
-#if NET40
-                    .Select(prop => new { Key = prop.Name, Value = prop.GetValue(tableAttributes,null).ToString() })
-#endif
-                    .ToDictionary(key => key.Key, value => value.Value);
+                var dic = tableAttributes.GetToStringValues();
                 return dic;
             }
         }
@@ -141,7 +136,7 @@ namespace HtmlTableHelper
                     tbody.Append($"<tr{_TrAttHtml}>");
                     foreach (var prop in props)
                     {
-                        var value = TypePropertiesCacheHelper.GetValueFromExpressionCache(type, prop, e);
+                        var value = prop.GetToStringValue(e);
                         string tdInnerHTML = Encode(value);
                         tbody.Append($"<td{_TdAttHtml}>{tdInnerHTML}</td>");
                     }
@@ -156,7 +151,7 @@ namespace HtmlTableHelper
 
             private IList<System.Reflection.PropertyInfo> GetGetPropertiesByAttrSkipFiliter(Type type)
             {
-                var props = TypePropertiesCacheHelper.GetTypePropertiesCache(type);
+                var props = type.GetPropertiesFromCache();
                 _customAttributes = CustomAttributeHelper.GetCustomAttributes(type);
                 if (_customAttributes.FirstOrDefault() != null)
                 {
