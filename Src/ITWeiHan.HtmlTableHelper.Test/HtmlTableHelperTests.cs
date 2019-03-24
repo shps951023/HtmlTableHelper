@@ -55,7 +55,7 @@ namespace HtmlTableHelper.Test
         {
             var excepted = "<table><thead><tr><th>MyProperty1</th><th>MyProperty2</th></tr></thead><tbody><tr><td>test1</td><td></td></tr></tbody></table>";
             var soucreData = new TestClass[]{
-                 new TestClass(){MyProperty1="test1"}
+                 new TestClass(){MyProperty1="test1",MyProperty2=null}
             };
             var html = soucreData.ToHtmlTable();
             Assert.AreEqual(excepted, html);
