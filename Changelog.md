@@ -1,3 +1,6 @@
+### version 1.2.0
+- [X] Improve efficiency by ValueGetter
+
 ### version 1.1.9
 - [X] Support .NET 4.0
 
