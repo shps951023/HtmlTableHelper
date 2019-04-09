@@ -3,7 +3,7 @@
 
 ### Features
 - Mini (DLL Size Only 20KB) and Easy to use.
-- Support .NET Standard 2.0/.NET 4.5/.NET 4.0
+- Support .NET Standard 2.0/.NET 4.6/.NET 4.5/.NET 4.0
 - Without Any Third Party Library
 - Support Anonymous Types,Dapper Dynamic Query,List/Array/Set/Enumrable,DataTable,Dictionary
 
@@ -112,6 +112,16 @@ public class ModelClassWithSkipAttr
 }
 ```
 
+##### HTMLTableBuilder
+
+###### HtmlCaption
+```C#
+var soucreData = new []{ new {MyProperty1="test",MyProperty2=123} };
+var html = soucreData.CreateBuilder()
+    .SetCaption("This is Caption", new { id = "CaptionId" })
+    .ToHtmlTable();
+//Result : <table><caption id=\"CaptionId\" >This is Caption</caption><thead><tr><th>MyProperty1</th><th>MyProperty2</th></tr></thead><tbody><tr><td>test</td><td>123</td></tr></tbody></table>
+```
 
 ##### HTMLTableSetting
 

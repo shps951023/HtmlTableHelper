@@ -5,6 +5,11 @@ namespace HtmlTableHelper
 {
     public static partial class HtmlTableHelper
     {
+        public static string ToHtmlTable(this HtmlTableHelperBuilder builder, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
+        {
+            return ToHtmlTableByIEnumrable(builder.Enums, tableAttributes, trAttributes, tdAttributes, HTMLTableSetting,builder);
+        }
+
         public static string ToHtmlTable<T>(this IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
             return ToHtmlTableByIEnumrable(enums, tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
@@ -16,10 +21,10 @@ namespace HtmlTableHelper
             return htmltablegenerater.ToHtmlTableByDataTable(datatable);
         }
 
-        private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
+        private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null,HtmlTableHelperBuilder builder = null)
         {
             var htmltablegenerater = HtmlTableGeneraterFactory.CreateInstance(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
-
+            htmltablegenerater._HtmlTableHelperBuilder = builder;
             // Q:   Why not only IEnumerable<IDictionary> ?
             // A:   Example Dapper Dynamic Query Only implement IDictionary<string,object> without IDictionary
             // Q:   Why not use overload ToHtmlTable<TKey,TValue>(this IEnumerable<Dictionary<Tkey,TValue>> enums)?

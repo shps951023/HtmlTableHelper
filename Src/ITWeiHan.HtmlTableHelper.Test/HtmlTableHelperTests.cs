@@ -51,6 +51,20 @@ namespace HtmlTableHelper.Test
         }
 
         [TestMethod]
+        public void CaptionTest()
+        {
+            var excepted = "<table><caption id=\"CaptionId\" >This is Caption</caption><thead><tr><th>MyProperty1</th><th>MyProperty2</th></tr></thead><tbody><tr><td>test1</td><td>123</td></tr></tbody></table>";
+            var soucreData = new []{
+                 new {MyProperty1="test1",MyProperty2=123}
+            };
+            var html = soucreData.CreateBuilder()
+                .SetCaption("This is Caption", new { id = "CaptionId" })
+                .ToHtmlTable();
+            Assert.AreEqual(excepted, html);
+        }
+
+
+        [TestMethod]
         public void Prop_Is_Null_Test()
         {
             var excepted = "<table><thead><tr><th>MyProperty1</th><th>MyProperty2</th></tr></thead><tbody><tr><td>test1</td><td></td></tr></tbody></table>";

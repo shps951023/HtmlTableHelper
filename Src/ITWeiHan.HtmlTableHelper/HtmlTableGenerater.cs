@@ -23,13 +23,13 @@ namespace HtmlTableHelper
                     _HtmlTableSetting = htmlTableSetting ?? _DefualtHTMLTableSetting,
                     _TableAttributes = AttributeToHtml(tableAttributes),
                     _TrAttributes = AttributeToHtml(trAttributes),
-                    _TdAttributes = AttributeToHtml(tdAttributes)
+                    _TdAttributes = AttributeToHtml(tdAttributes),
                 };
                 htmltablegenerater.RenderTableTrTdAttributehtml();
                 return htmltablegenerater;
             }
 
-            private static Dictionary<string, string> AttributeToHtml<T>(T tableAttributes)
+            public static Dictionary<string, string> AttributeToHtml<T>(T tableAttributes)
             {
                 if (tableAttributes == null)
                     return null;
@@ -52,6 +52,7 @@ namespace HtmlTableHelper
             internal string _TrAttHtml { get; set; }
             internal string _TdAttHtml { get; set; }
             internal IEnumerable<TableColumnAttribute> _customAttributes { get; set; }
+            internal HtmlTableHelperBuilder _HtmlTableHelperBuilder { get; set; }
 #endregion
 
             internal HtmlTableGenerater(){}
@@ -72,6 +73,15 @@ namespace HtmlTableHelper
             private StringBuilder RenderHtmlTable(StringBuilder thead, StringBuilder tbody)
             {
                 var html = new StringBuilder($"<table{_TableAttHtml}>");
+                if (this._HtmlTableHelperBuilder != null)
+                {
+                    var attrs = this._HtmlTableHelperBuilder.Caption.Attributes;
+                    var htmlAtt = attrs != null
+                    ? string.Join("", HtmlTableGeneraterFactory.AttributeToHtml(attrs).Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
+                    : "";
+                    html.Append($"<caption{htmlAtt}>{_HtmlTableHelperBuilder.Caption.Content}</caption>");
+                }
+                    
                 html.Append($"<thead><tr{_TrAttHtml}>{thead}</tr></thead>");
                 html.Append($"<tbody>{tbody.ToString()}</tbody>");
                 html.Append("</table>");
@@ -110,7 +120,8 @@ namespace HtmlTableHelper
 
             public string ToHtmlTableByProperties<T>(IEnumerable<T> enums)
             {
-                var type = typeof(T);
+                var firstData = enums.FirstOrDefault();
+                var type = firstData?.GetType();
                 var props = GetGetPropertiesByAttrSkipFiliter(type);
 
 #region Check
