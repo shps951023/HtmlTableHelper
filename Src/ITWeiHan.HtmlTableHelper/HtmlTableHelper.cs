@@ -5,25 +5,25 @@ namespace HtmlTableHelper
 {
     public static partial class HtmlTableHelper
     {
-        public static string ToHtmlTable(this HtmlTableHelperBuilder builder, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
+        public static string ToHtmlTable(this HtmlTableHelperBuilder builder, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, object thAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
-            return ToHtmlTableByIEnumrable(builder.Enums, tableAttributes, trAttributes, tdAttributes, HTMLTableSetting,builder);
+            return ToHtmlTableByIEnumrable(builder.Enums, tableAttributes, trAttributes, tdAttributes, thAttributes, HTMLTableSetting,builder);
         }
 
-        public static string ToHtmlTable<T>(this IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
+        public static string ToHtmlTable<T>(this IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, object thAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
-            return ToHtmlTableByIEnumrable(enums, tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
+            return ToHtmlTableByIEnumrable(enums, tableAttributes, trAttributes, tdAttributes, thAttributes, HTMLTableSetting);
         }
 
-        public static string ToHtmlTable(this System.Data.DataTable datatable, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null)
+        public static string ToHtmlTable(this System.Data.DataTable datatable, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, object thAttributes = null, HtmlTableSetting HTMLTableSetting = null)
         {
-            var htmltablegenerater = HtmlTableGeneraterFactory.CreateInstance(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
+            var htmltablegenerater = HtmlTableGeneraterFactory.CreateInstance(tableAttributes, trAttributes, tdAttributes, thAttributes, HTMLTableSetting);
             return htmltablegenerater.ToHtmlTableByDataTable(datatable);
         }
 
-        private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, HtmlTableSetting HTMLTableSetting = null,HtmlTableHelperBuilder builder = null)
+        private static string ToHtmlTableByIEnumrable<T>(IEnumerable<T> enums, object tableAttributes = null, object trAttributes = null, object tdAttributes = null, object thAttributes = null, HtmlTableSetting HTMLTableSetting = null,HtmlTableHelperBuilder builder = null)
         {
-            var htmltablegenerater = HtmlTableGeneraterFactory.CreateInstance(tableAttributes, trAttributes, tdAttributes, HTMLTableSetting);
+            var htmltablegenerater = HtmlTableGeneraterFactory.CreateInstance(tableAttributes, trAttributes, tdAttributes, thAttributes, HTMLTableSetting);
             htmltablegenerater._HtmlTableHelperBuilder = builder;
             // Q:   Why not only IEnumerable<IDictionary> ?
             // A:   Example Dapper Dynamic Query Only implement IDictionary<string,object> without IDictionary

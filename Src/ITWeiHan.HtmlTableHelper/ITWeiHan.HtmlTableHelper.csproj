@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;net451;net46;netstandard2.0;</TargetFrameworks>
+    <TargetFrameworks>net40;netstandard2.0;</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Authors>ITWeiHan</Authors>
@@ -14,13 +14,16 @@ More Details in Github Link : [HtmlTableHelper: Mini C# IEnumerable object to HT
     <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/shps951023/HtmlTableHelper</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/shps951023/ImageHosting/master/img/2019-01-17.13.18.32-image.png</PackageIconUrl>
-    <AssemblyVersion>1.2.1</AssemblyVersion>
-    <FileVersion>1.2.1</FileVersion>
-    <Version>1.2.1</Version>
+    <AssemblyVersion>1.2.2</AssemblyVersion>
+    <FileVersion>1.2.2</FileVersion>
+    <Version>1.2.2</Version>
     <PackageId>HtmlTableHelper</PackageId>
-    <PackageReleaseNotes>### version 1.2.1
+    <PackageReleaseNotes>### version 1.2.2
+- [X] fix EmptyRow will get exception.
+- [X] Support thAttributes
+
+### version 1.2.1
 - [X] Add HtmlTableHelperBuilder (SetCaption)
-- [X] Support .NET 4.6
 
 ### version 1.2.0
 - [X] Improve efficiency by ValueGetter

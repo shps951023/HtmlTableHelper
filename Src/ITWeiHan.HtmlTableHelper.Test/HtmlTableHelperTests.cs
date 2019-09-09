@@ -201,6 +201,27 @@ namespace HtmlTableHelper.Test
         }
 
         [TestMethod]
+        public void AttributeThTest()
+        {
+            var expected = @"<table><thead><tr><th class=""SomeClass"" >Name</th><th class=""SomeClass"" >Age</th><th class=""SomeClass"" >Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            //IEnumrable
+            {
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+
+                var html = sourceData.ToHtmlTable(thAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(expected,html);
+            }
+
+            //DataTable
+            {
+                var sourceData = GetTestDataTable();
+
+                var html = sourceData.ToHtmlTable(thAttributes: new { @class = "SomeClass" });
+                Assert.AreEqual(expected,html);
+            }
+        }
+
+        [TestMethod]
         public void AttributeTdTest()
         {
             var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td class=""SomeClass"" >ITWeiHan</td><td class=""SomeClass"" >25</td><td class=""SomeClass"" >Taiwan</td></tr></tbody></table>";
@@ -229,6 +250,18 @@ namespace HtmlTableHelper.Test
             var sourceData = new[] { new { Name = "ITWeiHan" } };
             var array = sourceData.ToArray().ToHtmlTable(tableAttributes: new { @class = "SomeClass\" onclick=alert('XSS') \"" });
             Assert.AreEqual(array, expected);
+        }
+
+        /// <summary>
+        /// [Issues Found ¡P Issue #25 ](https://github.com/shps951023/HtmlTableHelper/issues/25)
+        /// </summary>
+        [TestMethod]
+        public void EmptyRow()
+        {
+            var expected = "<table><thead><tr><th>MyProperty1</th><th>MyProperty2</th></tr></thead><tbody></tbody></table>";
+            var sourceData = new TestClass[] {  };
+            var result = sourceData.ToHtmlTable();
+            Assert.AreEqual(expected,result);
         }
     }
 }

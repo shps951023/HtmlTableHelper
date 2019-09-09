@@ -1,6 +1,10 @@
+
+### version 1.2.2
+- [X] fix EmptyRow will get exception.
+- [X] Support thAttributes
+
 ### version 1.2.1
 - [X] Add HtmlTableHelperBuilder (SetCaption)
-- [X] Support .NET 4.6
 
 ### version 1.2.0
 - [X] Improve efficiency by ValueGetter

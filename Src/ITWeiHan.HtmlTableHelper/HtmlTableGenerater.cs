@@ -16,7 +16,7 @@ namespace HtmlTableHelper
                 IsHtmlEncodeMode = true
             };
 
-            public static HtmlTableGenerater CreateInstance<T1, T2, T3>(T1 tableAttributes, T2 trAttributes, T3 tdAttributes, HtmlTableSetting htmlTableSetting)
+            public static HtmlTableGenerater CreateInstance<T1, T2, T3,T4>(T1 tableAttributes, T2 trAttributes, T3 tdAttributes, T4 thAttributes, HtmlTableSetting htmlTableSetting)
             {
                 var htmltablegenerater = new HtmlTableGenerater
                 {
@@ -24,6 +24,7 @@ namespace HtmlTableHelper
                     _TableAttributes = AttributeToHtml(tableAttributes),
                     _TrAttributes = AttributeToHtml(trAttributes),
                     _TdAttributes = AttributeToHtml(tdAttributes),
+                    _ThAttributes = AttributeToHtml(thAttributes),
                 };
                 htmltablegenerater.RenderTableTrTdAttributehtml();
                 return htmltablegenerater;
@@ -33,8 +34,6 @@ namespace HtmlTableHelper
             {
                 if (tableAttributes == null)
                     return null;
-
-                var type = tableAttributes.GetType();
                 var dic = tableAttributes.GetToStringValues();
                 return dic;
             }
@@ -42,15 +41,18 @@ namespace HtmlTableHelper
 
         private class HtmlTableGenerater
         {
-#region Prop
+            
+            #region Prop
 
             internal HtmlTableSetting _HtmlTableSetting { get; set; }
             internal Dictionary<string, string> _TableAttributes { get; set; }
             internal Dictionary<string, string> _TrAttributes { get; set; }
             internal Dictionary<string, string> _TdAttributes { get; set; }
+            internal Dictionary<string, string> _ThAttributes { get; set; }
             internal string _TableAttHtml { get; set; }
             internal string _TrAttHtml { get; set; }
             internal string _TdAttHtml { get; set; }
+            internal string _ThAttHtml { get; set; }
             internal IEnumerable<TableColumnAttribute> _customAttributes { get; set; }
             internal HtmlTableHelperBuilder _HtmlTableHelperBuilder { get; set; }
 #endregion
@@ -67,6 +69,10 @@ namespace HtmlTableHelper
                     : "";
                 this._TdAttHtml = _TdAttributes != null
                     ? string.Join("", _TdAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
+                    : "";
+
+                this._ThAttHtml = _ThAttributes != null
+                    ? string.Join("", _ThAttributes.Select(s => $" {s.Key}=\"{Encode(s.Value)}\" "))
                     : "";
             }
 
@@ -95,7 +101,7 @@ namespace HtmlTableHelper
                 for (int i = 0; i < dt.Columns.Count; i++)
                 {
                     string thInnerHTML = Encode(dt.Columns[i].ColumnName);
-                    thead.Append($"<th>{thInnerHTML}</th>");
+                    thead.Append($"<th{_ThAttHtml}>{thInnerHTML}</th>");
                 }
 
                 //Body
@@ -121,8 +127,11 @@ namespace HtmlTableHelper
             public string ToHtmlTableByProperties<T>(IEnumerable<T> enums)
             {
                 var firstData = enums.FirstOrDefault();
-                var type = firstData?.GetType();
-                var props = GetGetPropertiesByAttrSkipFiliter(type);
+                //done: First use type with GetType func then type with typeof 
+                var type = firstData != null
+                        ? firstData.GetType()
+                        : typeof(T);
+                var props = GetPropertiesByAttrSkipFiliter(type);
 
 #region Check
                 if (props.Count == 0)
@@ -137,7 +146,7 @@ namespace HtmlTableHelper
                 {
                     var costomAtt = CustomAttributeHelper.GetCustomAttributeByProperty(_customAttributes, p);
                     string thInnerHTML = costomAtt != null ? costomAtt.DisplayName : Encode(p.Name);
-                    thead.Append($"<th>{thInnerHTML}</th>");
+                    thead.Append($"<th{_ThAttHtml}>{thInnerHTML}</th>");
                 }
 
                 //Body
@@ -160,7 +169,7 @@ namespace HtmlTableHelper
                 return html.ToString();
             }
 
-            private IList<System.Reflection.PropertyInfo> GetGetPropertiesByAttrSkipFiliter(Type type)
+            private IList<System.Reflection.PropertyInfo> GetPropertiesByAttrSkipFiliter(Type type)
             {
                 var props = type.GetPropertiesFromCache();
                 _customAttributes = CustomAttributeHelper.GetCustomAttributes(type);

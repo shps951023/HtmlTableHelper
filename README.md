@@ -64,19 +64,19 @@ var tablehtml = sourceData.ToHtmlTableByDictionary();
 ```
 --->
 
-**Custom Table/TR/TD Attributes (Dynamic Type)**
+**Custom Table/TR/TD/TH Attributes (Dynamic Type)**
 
 ```C#
 var data = /*List/Array/Set/Enumrable..*/;
 var html = data.ToHtmlTable( tableAttributes: new { @class = "SomeClass"} //this is dynamic type, support all attribute 
-    ,trAttributes: new { ID = "SomeID" },tdAttributes: new { width = "120 px" }
+    ,trAttributes: new { ID = "SomeID" },tdAttributes: new { width = "120 px" },thAttributes: new { @class = "dark-theme" }
 );
 /*
 Result:
 <table class="SomeClass">
 	<thead>
 		<tr ID="SomeID">
-			<th>..</th>
+			<th class="dark-theme">..</th>
 		</tr>
 	</thead>
 	<tbody>
