@@ -28,8 +28,8 @@ namespace HtmlTableHelper.Test
         [TestMethod]
         public void IEnumerable_Test()
         {
-            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
-            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Sex</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Man</td></tr></tbody></table>";
+            var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Sex = "Man" } };
 
             var array = sourceData.ToArray().ToHtmlTable();
             Assert.AreEqual(array, expected);
@@ -87,14 +87,14 @@ namespace HtmlTableHelper.Test
         [TestMethod]
         public void DapperDynamicQuery_Test()
         {
-            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th><th>Phone</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td><td></td></tr></tbody></table>";
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Sex</th><th>Phone</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Man</td><td></td></tr></tbody></table>";
             const string _path = "Test.sqlite";
             SQLiteConnection.CreateFile(_path);
             using (var cn = new SQLiteConnection($"Data Source={_path};Version=3;"))
             {
-                var sourceData = cn.Query(@"select 'ITWeiHan' Name,25 Age,'Taiwan' Country,null Phone");
+                var sourceData = cn.Query(@"select 'ITWeiHan' Name,25 Age,'Man' Sex,null Phone");
                 var html = sourceData.ToHtmlTable();
-                Assert.AreEqual(html, expected);
+                Assert.AreEqual(expected, html);
             }
         }
 
@@ -102,12 +102,12 @@ namespace HtmlTableHelper.Test
         [TestMethod]
         public void DataTableToHtml_Test()
         {
-            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Sex</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Man</td></tr></tbody></table>";
 
             DataTable table = GetTestDataTable();
 
             var html = table.ToHtmlTable();
-            Assert.AreEqual(html, expected);
+            Assert.AreEqual(expected, html);
         }
 
         private static DataTable GetTestDataTable()
@@ -115,25 +115,25 @@ namespace HtmlTableHelper.Test
             var table = new DataTable();
             table.Columns.Add("Name", typeof(string));
             table.Columns.Add("Age", typeof(int));
-            table.Columns.Add("Country", typeof(string));
+            table.Columns.Add("Sex", typeof(string));
 
-            table.Rows.Add("ITWeiHan", 25, "Taiwan");
+            table.Rows.Add("ITWeiHan", 25, "Man");
             return table;
         }
 
         [TestMethod]
         public void DictinaryToHtml_Test()
         {
-            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Sex</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Man</td></tr></tbody></table>";
             var sourceData = new[] {
                new Dictionary<string, object> (){
                      {"Name" , "ITWeiHan" }
                     ,{"Age",25}
-                    ,{"Country","Taiwan"}
+                    ,{"Sex","Man"}
                }
             };
             var html = sourceData.ToHtmlTable();
-            Assert.AreEqual(html, expected);
+            Assert.AreEqual(expected, html);
         }
 
         [TestMethod]
@@ -161,13 +161,13 @@ namespace HtmlTableHelper.Test
         [TestMethod]
         public void AttributeTableTest()
         {
-            var expected = @"<table class=""SomeClass"" ><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var expected = @"<table class=""SomeClass"" ><thead><tr><th>Name</th><th>Age</th><th>Sex</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Man</td></tr></tbody></table>";
             //IEnumrable
             {
-                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Sex = "Man" } };
 
                 var html = sourceData.ToArray().ToHtmlTable(tableAttributes: new { @class = "SomeClass" });
-                Assert.AreEqual(html, expected);
+                Assert.AreEqual(expected, html);
             }
 
             //DataTable
@@ -175,20 +175,20 @@ namespace HtmlTableHelper.Test
                 var sourceData = GetTestDataTable();
 
                 var html = sourceData.ToHtmlTable(tableAttributes: new { @class = "SomeClass" });
-                Assert.AreEqual(html, expected);
+                Assert.AreEqual(expected, html);
             }
         }
 
         [TestMethod]
         public void AttributeTrTest()
         {
-            var expected = @"<table><thead><tr class=""SomeClass"" ><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr class=""SomeClass"" ><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var expected = @"<table><thead><tr class=""SomeClass"" ><th>Name</th><th>Age</th><th>Sex</th></tr></thead><tbody><tr class=""SomeClass"" ><td>ITWeiHan</td><td>25</td><td>Man</td></tr></tbody></table>";
             //IEnumrable
             {
-                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Sex = "Man" } };
 
                 var html = sourceData.ToArray().ToHtmlTable(trAttributes: new { @class = "SomeClass" });
-                Assert.AreEqual(html, expected);
+                Assert.AreEqual(expected, html);
             }
 
             //DataTable
@@ -196,17 +196,17 @@ namespace HtmlTableHelper.Test
                 var sourceData = GetTestDataTable();
 
                 var html = sourceData.ToHtmlTable(trAttributes: new { @class = "SomeClass" });
-                Assert.AreEqual(html, expected);
+                Assert.AreEqual(expected, html);
             }
         }
 
         [TestMethod]
         public void AttributeThTest()
         {
-            var expected = @"<table><thead><tr><th class=""SomeClass"" >Name</th><th class=""SomeClass"" >Age</th><th class=""SomeClass"" >Country</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Taiwan</td></tr></tbody></table>";
+            var expected = @"<table><thead><tr><th class=""SomeClass"" >Name</th><th class=""SomeClass"" >Age</th><th class=""SomeClass"" >Sex</th></tr></thead><tbody><tr><td>ITWeiHan</td><td>25</td><td>Man</td></tr></tbody></table>";
             //IEnumrable
             {
-                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Sex = "Man" } };
 
                 var html = sourceData.ToHtmlTable(thAttributes: new { @class = "SomeClass" });
                 Assert.AreEqual(expected,html);
@@ -224,14 +224,14 @@ namespace HtmlTableHelper.Test
         [TestMethod]
         public void AttributeTdTest()
         {
-            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody><tr><td class=""SomeClass"" >ITWeiHan</td><td class=""SomeClass"" >25</td><td class=""SomeClass"" >Taiwan</td></tr></tbody></table>";
+            var expected = @"<table><thead><tr><th>Name</th><th>Age</th><th>Sex</th></tr></thead><tbody><tr><td class=""SomeClass"" >ITWeiHan</td><td class=""SomeClass"" >25</td><td class=""SomeClass"" >Man</td></tr></tbody></table>";
 
             //IEnumrable
             {
-                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Country = "Taiwan" } };
+                var sourceData = new[] { new { Name = "ITWeiHan", Age = 25, Sex = "Man" } };
 
                 var html = sourceData.ToArray().ToHtmlTable(tdAttributes: new { @class = "SomeClass" });
-                Assert.AreEqual(html, expected);
+                Assert.AreEqual(expected, html);
             }
 
             //DataTable
@@ -239,7 +239,7 @@ namespace HtmlTableHelper.Test
                 var sourceData = GetTestDataTable();
 
                 var html = sourceData.ToHtmlTable(tdAttributes: new { @class = "SomeClass" });
-                Assert.AreEqual(html, expected);
+                Assert.AreEqual(expected, html);
             }
         }
 
