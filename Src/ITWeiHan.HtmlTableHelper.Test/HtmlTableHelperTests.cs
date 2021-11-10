@@ -253,7 +253,7 @@ namespace HtmlTableHelper.Test
         }
 
         /// <summary>
-        /// [Issues Found ¡P Issue #25 ](https://github.com/shps951023/HtmlTableHelper/issues/25)
+        /// [Issues Found ï¿½P Issue #25 ](https://github.com/shps951023/HtmlTableHelper/issues/25)
         /// </summary>
         [TestMethod]
         public void EmptyRow()
