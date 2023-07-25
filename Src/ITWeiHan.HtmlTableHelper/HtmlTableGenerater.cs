@@ -79,7 +79,7 @@ namespace HtmlTableHelper
             private StringBuilder RenderHtmlTable(StringBuilder thead, StringBuilder tbody)
             {
                 var html = new StringBuilder($"<table{_TableAttHtml}>");
-                if (this._HtmlTableHelperBuilder != null)
+                if (this._HtmlTableHelperBuilder?.Caption != null)
                 {
                     var attrs = this._HtmlTableHelperBuilder.Caption.Attributes;
                     var htmlAtt = attrs != null
