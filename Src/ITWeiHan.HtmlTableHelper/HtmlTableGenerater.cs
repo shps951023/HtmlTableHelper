@@ -136,7 +136,7 @@ namespace HtmlTableHelper
 #region Check
                 if (props.Count == 0)
                 {
-                    throw new Exception("At least one Property");
+                    return "";
                 }
 #endregion
 
